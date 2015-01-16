@@ -1,0 +1,129 @@
+<application>
+  
+  <name>iCub_SIM2_with_iCubGUI</name> 
+  
+ 
+    <module>
+      <name>iCub_SIM2</name>
+      <node>localhost</node>
+      <parameters>--xpos 0 --ypos 500 --width 700</parameters>
+      <stdio></stdio>
+      <tag>iCub_SIM2</tag>
+      <workdir>/home/matej/programming/my_stuff/icub_matej/trunk/iCubSimulation_selfTouch/debug</workdir>
+    </module> 
+ 
+    <!--module>
+      <name>selfTouchPosControlSeq2</name>
+      <node>localhost</node>
+      <parameters>--robot icubSim</parameters>
+      <stdio></stdio>
+      <tag>selfTouchPosControlSeq2</tag>
+      <workdir>/home/matej/programming/my_stuff/icub_matej/trunk/misc/selfTouchPositionControlSequences2</workdir>
+    </module-->   
+     
+   <module>
+    <name>iCubGui</name>
+    <node>localhost</node>
+    <parameters>--xpos 1300 --ypos 0 --width 370</parameters> 
+    <tag>iCubGui</tag>
+  </module>
+   
+   <module>
+    <name>iCubSkinGui</name>
+    <parameters>--from left_hand.ini --useCalibration --xpos 900 --ypos 600 --width 400 --height 400</parameters>
+    <node>localhost</node>
+    <tag>iCubSkinGui_leftHand</tag>
+  </module>
+  
+   <module>
+    <name>iCubSkinGui</name>
+    <parameters>--from right_hand.ini --useCalibration  --xpos 1300 --ypos 600 --width 400 --height 400</parameters>
+    <node>localhost</node>
+    <tag>iCubSkinGui_rightHand</tag>
+  </module>
+  
+  <module>
+    <name>yarp read</name>
+    <parameters>/skineventsreader</parameters>
+    <node>localhost</node>
+    <tag>yarp_read</tag>
+  </module>
+  
+  <module>
+        <name>dataDumper</name>
+	<parameters>--name /data/skin/skin_events --rxTime</parameters>
+        <node>localhost</node>
+        <stdio></stdio>
+        <tag>dataDumperSkinContact</tag>
+    </module>
+  
+   <connection>
+	<from>/icubSim/skinManager/skin_events:o</from>
+	<to>/data/skin/skin_events</to>
+        <protocol>udp</protocol>
+   </connection>  
+     
+  <connection>
+    <from>/icubSim/head/state:o</from>
+    <to>/iCubGui/head:i</to>
+    <protocol>udp</protocol>
+  </connection>
+  <connection>
+    <from>/icubSim/inertial</from>
+    <to>/iCubGui/inertial:i</to>
+    <protocol>udp</protocol>
+  </connection>
+  <connection>
+    <from>/icubSim/left_arm/state:o</from>
+    <to>/iCubGui/left_arm:i</to>
+    <protocol>udp</protocol>
+  </connection>
+  <connection>
+    <from>/icubSim/right_arm/state:o</from>
+    <to>/iCubGui/right_arm:i</to>
+    <protocol>udp</protocol>
+  </connection>
+   <connection>
+    <from>/icubSim/left_leg/state:o</from>
+    <to>/iCubGui/left_leg:i</to>
+    <protocol>udp</protocol>
+  </connection>
+  <connection>
+    <from>/icubSim/right_leg/state:o</from>
+    <to>/iCubGui/right_leg:i</to>
+    <protocol>udp</protocol>
+  </connection>
+  <connection>
+    <from>/icubSim/torso/state:o</from>
+    <to>/iCubGui/torso:i</to>
+    <protocol>udp</protocol>
+  </connection>
+  
+  <connection>
+    <from>/icubSim/skinManager/skin_events:o</from>
+    <to>/iCubGui/forces</to>
+    <protocol>udp</protocol>
+  </connection>
+    
+  
+  <connection>
+    <from>/icubSim/skin/left_hand_comp</from>
+    <to>/skinGui/left_hand:i</to>
+    <protocol>udp</protocol>
+  </connection>
+  <connection>
+    <from>/icubSim/skin/right_hand_comp</from>
+    <to>/skinGui/right_hand:i</to>
+    <protocol>udp</protocol>
+  </connection>
+    
+  <connection>
+    <from>/icubSim/skinManager/skin_events:o</from>
+    <to>/skineventsreader</to>
+    <protocol>udp</protocol>
+  </connection>
+  
+    
+</application>
+
+

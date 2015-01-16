@@ -1,0 +1,29 @@
+<application>
+  
+  <name>iCub_SIM2_withCollisionPrimitive2</name> 
+  
+  //<dependencies>
+  // <port>/port1 </port>
+  // <port>/port2 </port>
+  //</dependencies>
+
+   <module>
+      <name>iCub_SIM2</name>
+      <node>localhost</node>
+      <stdio></stdio>
+      <tag>iCub_SIM2</tag>
+      <workdir>/home/matej/programming/my_stuff/icub_matej/trunk/iCubSimulation_selfTouch/debug</workdir>
+    </module> 
+ 
+    <module>
+      <name>selfTouchPosControlSeq2</name>
+      <node>localhost</node>
+      <parameters>--robot icubSim</parameters>
+      <stdio></stdio>
+      <tag>selfTouchPosControlSeq2</tag>
+      <workdir>/home/matej/programming/my_stuff/icub_matej/trunk/misc/selfTouchPositionControlSequences2</workdir>
+    </module>   
+
+</application>
+
+
