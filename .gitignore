@@ -1,0 +1,29 @@
+*~
+
+## generic files to ignore
+*.lock
+*.DS_Store
+*.swp
+*.out
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+## build dirs
+#modules/faceDetector/build*/
+
+*kdev*
+
+###Cmake files
+CMakeCache.txt
+CMakeFiles
+Makefile
+cmake_install.cmake
+install_manifest.txt
+
+
+## others
+*~
