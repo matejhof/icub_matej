@@ -15,6 +15,11 @@
 ## build dirs
 #modules/faceDetector/build*/
 
+#executables
+doubleTouchMovementPrimitives/selfTouchPositionControlSequences/selfTouchPosControlSeq
+doubleTouchMovementPrimitives/selfTouchPositionControlSequences2/selfTouchPosControlSeq2
+doubleTouchMovementPrimitives/selfTouchRightIndexToLeftForearmPositionControlSequence/selfTouchRightIndexToLeftForearmPositionControlSequence
+
 *kdev*
 
 ###Cmake files
