@@ -13,12 +13,12 @@
 *.obj
 
 ## build dirs
-#modules/faceDetector/build*/
+doubleTouchMovementPrimitives/selfTouchPositionControlSequences/build*/
+doubleTouchMovementPrimitives/selfTouchPositionControlSequences2/build*/
+doubleTouchMovementPrimitives/selfTouchRightIndexToLeftForearmPositionControlSequence/build*/
 
 #executables
-doubleTouchMovementPrimitives/selfTouchPositionControlSequences/selfTouchPosControlSeq
-doubleTouchMovementPrimitives/selfTouchPositionControlSequences2/selfTouchPosControlSeq2
-doubleTouchMovementPrimitives/selfTouchRightIndexToLeftForearmPositionControlSequence/selfTouchRightIndexToLeftForearmPositionControlSequence
+
 
 *kdev*
 

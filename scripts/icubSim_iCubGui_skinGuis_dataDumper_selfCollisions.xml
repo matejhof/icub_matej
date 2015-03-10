@@ -67,14 +67,14 @@
   
    <module>
     <name>iCubSkinGui</name>
-    <parameters>--from left_hand.ini --useCalibration --xpos 1400 --ypos 620 --width 300 --height 300</parameters>
+    <parameters>--from left_hand_V2_1.ini --useCalibration --xpos 1400 --ypos 620 --width 300 --height 300</parameters>
     <node>localhost</node>
     <tag>iCubSkinGui_leftHand</tag>
   </module>
   
    <module>
     <name>iCubSkinGui</name>
-    <parameters>--from right_hand.ini --useCalibration  --xpos 700 --ypos 620 --width 300 --height 300</parameters>
+    <parameters>--from right_hand_V2_1.ini --useCalibration  --xpos 700 --ypos 620 --width 300 --height 300</parameters>
     <node>localhost</node>
     <tag>iCubSkinGui_rightHand</tag>
   </module>
