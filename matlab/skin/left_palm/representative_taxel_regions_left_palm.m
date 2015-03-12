@@ -3,6 +3,8 @@
 
 clear; clc;
 
+SAVE_FIGURES = false;
+
 %% load stuff
 %load('taxel_positions_left_palm_Marco');
 load('taxel_positions_with_IDs_left_palm_Marco');
@@ -77,8 +79,6 @@ end
 %% visualize   
 
 
-
-
 f2 = figure(2);
 clf(f2);
 length = 10; % for ref. frame
@@ -121,41 +121,8 @@ ylabel('Taxel position x (mm)');
 axis equal;
 hold off;
 
-saveas(f2,'Taxel_positions_left_palm_FoR10_withRepTaxelRegions.fig');
-print -f2 -djpeg 'Taxel_positions_left_palm_FoR10_withRepTaxelRegions.jpg';
-
-
-%f3=figure(3);
-%annotation('arrow',[0 1],[0 0]);
-%quiver(0,0,1,0);
-%plot(0.9,0.1)
-
-%% prepare output
-
-% convert to meters
-for i=1:NR_TAXELS
-    taxel_positions_FoR_10_meters = taxel_positions_FoR_10 ./ 1000.0; 
+if SAVE_FIGURES
+    saveas(f2,'Taxel_positions_left_palm_FoR10_withRepTaxelRegions.fig');
+    print -f2 -djpeg 'Taxel_positions_left_palm_FoR10_withRepTaxelRegions.jpg';
 end
 
-%with taxel IDs
-taxel_IDs_and_positions_palm_only_FoR_10_meters = [TAXEL_IDS_AND_POSITIONS(:,1) taxel_positions_FoR_10_meters];
-taxel_handIDs_and_positions_palm_only_FoR_10_meters = taxel_IDs_and_positions_palm_only_FoR_10_meters;
-for i=1:NR_TAXELS
-   taxel_handIDs_and_positions_palm_only_FoR_10_meters(i,1) =  taxel_handIDs_and_positions_palm_only_FoR_10_meters(i,1) + TAXEL_ID_OFFSET_PALM_TO_HAND;
-end
-
-dlmwrite('left_palm_only_IDs_and_positions_meters.txt', taxel_IDs_and_positions_palm_only_FoR_10_meters);
-dlmwrite('left_palm_only_handIDs_and_positions_meters.txt', taxel_handIDs_and_positions_palm_only_FoR_10_meters);
-
-% now prepare the text file with 3 position coordinates and three with the
-% normal - we will assign 0 0 -1 - that is point out of the palm,
-% with 192 rows - taxel ID is implicit in the (row number - 1)
-beginning_zeros=zeros(TAXEL_ID_OFFSET_PALM_TO_HAND,6);
-end_zeros_count = 192-(NR_TAXELS+TAXEL_ID_OFFSET_PALM_TO_HAND);
-end_zeros=zeros(end_zeros_count,6);
-for j=1:NR_TAXELS
-    taxel_positions_and_normals_FoR_10_meters(j,:) = [taxel_positions_FoR_10_meters(j,:) 0 0 -1 ];
-end
-taxel_positions_and_normals_palm_and_fake_fingers_FoR_10_meters = [beginning_zeros ; taxel_positions_and_normals_FoR_10_meters; end_zeros];
-dlmwrite('left_hand.txt',taxel_positions_and_normals_palm_and_fake_fingers_FoR_10_meters,'delimiter', '\t', ...
-         'precision', 5);

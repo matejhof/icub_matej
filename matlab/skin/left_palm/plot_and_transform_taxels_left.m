@@ -2,6 +2,8 @@
 % Genova Dec 2013
 
 clear; clc;
+SAVE_FIGURES = false;
+PRODUCE_OUTPUT_FILE = false;
 
 %% load stuff
 %load('taxel_positions_left_palm_Marco');
@@ -116,8 +118,10 @@ ylabel('Taxel position x (mm)');
 axis equal;
 hold off;
 
-saveas(f2,'Taxel_positions_left_palm_FoR10.fig');
-print -f2 -djpeg 'Taxel_positions_left_palm_FoR10.jpg';
+if SAVE_FIGURES
+    saveas(f2,'Taxel_positions_left_palm_FoR10.fig');
+    print -f2 -djpeg 'Taxel_positions_left_palm_FoR10.jpg';
+end    
 
 f3 = figure(3);
 clf(f3);
@@ -150,12 +154,10 @@ ylabel('Taxel position x (mm)');
 axis equal;
 hold off;
 
-saveas(f2,'Taxel_positions_left_palm_FoR10.fig');
-print -f2 -djpeg 'Taxel_positions_left_palm_FoR10.jpg';
-
-saveas(f3,'Taxel_positions_left_palm_FoR10_withThermalAndRepTaxels.fig');
-print -f3 -djpeg 'Taxel_positions_left_palm_FoR10_withThermalAndRepTaxels.jpg';
-
+if SAVE_FIGURES
+    saveas(f3,'Taxel_positions_left_palm_FoR10_withThermalAndRepTaxels.fig');
+    print -f3 -djpeg 'Taxel_positions_left_palm_FoR10_withThermalAndRepTaxels.jpg';
+end
 %f3=figure(3);
 %annotation('arrow',[0 1],[0 0]);
 %quiver(0,0,1,0);
@@ -163,30 +165,33 @@ print -f3 -djpeg 'Taxel_positions_left_palm_FoR10_withThermalAndRepTaxels.jpg';
 
 %% prepare output
 
-% convert to meters
-for i=1:NR_TAXELS
-    taxel_positions_FoR_10_meters = taxel_positions_FoR_10 ./ 1000.0; 
-end
+if PRODUCE_OUTPUT_FILE
 
-%with taxel IDs
-taxel_IDs_and_positions_palm_only_FoR_10_meters = [TAXEL_IDS_AND_POSITIONS(:,1) taxel_positions_FoR_10_meters];
-taxel_handIDs_and_positions_palm_only_FoR_10_meters = taxel_IDs_and_positions_palm_only_FoR_10_meters;
-for i=1:NR_TAXELS
-   taxel_handIDs_and_positions_palm_only_FoR_10_meters(i,1) =  taxel_handIDs_and_positions_palm_only_FoR_10_meters(i,1) + TAXEL_ID_OFFSET_PALM_TO_HAND;
-end
+    % convert to meters
+    for i=1:NR_TAXELS
+        taxel_positions_FoR_10_meters = taxel_positions_FoR_10 ./ 1000.0; 
+    end
 
-dlmwrite('left_palm_only_IDs_and_positions_meters.txt', taxel_IDs_and_positions_palm_only_FoR_10_meters);
-dlmwrite('left_palm_only_handIDs_and_positions_meters.txt', taxel_handIDs_and_positions_palm_only_FoR_10_meters);
+    %with taxel IDs
+    taxel_IDs_and_positions_palm_only_FoR_10_meters = [TAXEL_IDS_AND_POSITIONS(:,1) taxel_positions_FoR_10_meters];
+    taxel_handIDs_and_positions_palm_only_FoR_10_meters = taxel_IDs_and_positions_palm_only_FoR_10_meters;
+    for i=1:NR_TAXELS
+       taxel_handIDs_and_positions_palm_only_FoR_10_meters(i,1) =  taxel_handIDs_and_positions_palm_only_FoR_10_meters(i,1) + TAXEL_ID_OFFSET_PALM_TO_HAND;
+    end
 
-% now prepare the text file with 3 position coordinates and three with the
-% normal - we will assign 0 0 -1 - that is point out of the palm,
-% with 192 rows - taxel ID is implicit in the (row number - 1)
-beginning_zeros=zeros(TAXEL_ID_OFFSET_PALM_TO_HAND,6);
-end_zeros_count = 192-(NR_TAXELS+TAXEL_ID_OFFSET_PALM_TO_HAND);
-end_zeros=zeros(end_zeros_count,6);
-for j=1:NR_TAXELS
-    taxel_positions_and_normals_FoR_10_meters(j,:) = [taxel_positions_FoR_10_meters(j,:) 0 0 -1 ];
+    dlmwrite('left_palm_only_IDs_and_positions_meters.txt', taxel_IDs_and_positions_palm_only_FoR_10_meters);
+    dlmwrite('left_palm_only_handIDs_and_positions_meters.txt', taxel_handIDs_and_positions_palm_only_FoR_10_meters);
+
+    % now prepare the text file with 3 position coordinates and three with the
+    % normal - we will assign 0 0 -1 - that is point out of the palm,
+    % with 192 rows - taxel ID is implicit in the (row number - 1)
+    beginning_zeros=zeros(TAXEL_ID_OFFSET_PALM_TO_HAND,6);
+    end_zeros_count = 192-(NR_TAXELS+TAXEL_ID_OFFSET_PALM_TO_HAND);
+    end_zeros=zeros(end_zeros_count,6);
+    for j=1:NR_TAXELS
+        taxel_positions_and_normals_FoR_10_meters(j,:) = [taxel_positions_FoR_10_meters(j,:) 0 0 -1 ];
+    end
+    taxel_positions_and_normals_palm_and_fake_fingers_FoR_10_meters = [beginning_zeros ; taxel_positions_and_normals_FoR_10_meters; end_zeros];
+    dlmwrite('left_hand.txt',taxel_positions_and_normals_palm_and_fake_fingers_FoR_10_meters,'delimiter', '\t', ...
+             'precision', 5);
 end
-taxel_positions_and_normals_palm_and_fake_fingers_FoR_10_meters = [beginning_zeros ; taxel_positions_and_normals_FoR_10_meters; end_zeros];
-dlmwrite('left_hand.txt',taxel_positions_and_normals_palm_and_fake_fingers_FoR_10_meters,'delimiter', '\t', ...
-         'precision', 5);
