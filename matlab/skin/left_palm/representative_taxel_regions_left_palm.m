@@ -3,7 +3,7 @@
 
 clear; clc;
 
-SAVE_FIGURES = false;
+SAVE_FIGURES = true;
 
 %% load stuff
 %load('taxel_positions_left_palm_Marco');
@@ -102,23 +102,24 @@ text(0,5,'x');
 
 %  line([x0 x1],[y0 y1],'Color','r','LineStyle','--','Marker','x'); 
 % vertical lines
-line([-25 -25],[-11 3],'Color','r','LineStyle','--','Marker','x'); 
-line([-5.5 -5.5],[-11 3],'Color','r','LineStyle','--','Marker','x'); 
+line([-26 -26],[-12 3],'Color','r','LineStyle','--','Marker','x'); 
+line([-5.5 -5.5],[-12 3],'Color','r','LineStyle','--','Marker','x'); 
 line([10 10],[-14 3],'Color','r','LineStyle','--','Marker','x'); 
 line([0 0],[-14 -40],'Color','r','LineStyle','--','Marker','x'); 
 line([30 30],[-40 3],'Color','r','LineStyle','--','Marker','x'); 
 % horizontal lines
 line([-25 30],[3 3],'Color','r','LineStyle','--','Marker','x');
-line([-25 10],[-11 -11],'Color','r','LineStyle','--','Marker','x');
+line([-25 10],[-12 -12],'Color','r','LineStyle','--','Marker','x');
 line([0 30],[-14 -14],'Color','r','LineStyle','--','Marker','x'); 
 line([0 30],[-24 -24],'Color','r','LineStyle','--','Marker','x'); 
 line([0 30],[-40 -40],'Color','r','LineStyle','--','Marker','x');
 
-ylim([-45 15]);
+ylim([-42 10]);
 xlim([-30 30]);
 xlabel('Taxel position y (mm)');
 ylabel('Taxel position x (mm)');
 axis equal;
+grid on;
 hold off;
 
 if SAVE_FIGURES

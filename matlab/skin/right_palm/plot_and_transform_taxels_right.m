@@ -2,6 +2,8 @@
 % Genova Dec 2013
 
 clear; clc;
+SAVE_FIGURES = false;
+PRODUCE_OUTPUT_FILE = false;
 
 %% load stuff
 load('taxel_positions_with_IDs_right_palm_Marco');
@@ -74,10 +76,51 @@ ylabel('Taxel position x (mm)');
 axis equal;
 hold off;
 
-saveas(f2,'Taxel_positions_right_palm_FoR10.fig');
-print -f2 -djpeg 'Taxel_positions_right_palm_FoR10.jpg';
+if SAVE_FIGURES
+    saveas(f2,'Taxel_positions_right_palm_FoR10.fig');
+    print -f2 -djpeg 'Taxel_positions_right_palm_FoR10.jpg';
+end
+
+
+f3 = figure(3);
+clf(f3);
+length = 10; % for ref. frame
+title('Taxel positions right palm FoR, with thermal pads and repr. taxels ');
+hold on;
+% we swap the axes for visualiation to match better with the palm
+plot(taxel_positions_FoR_10(:,2),taxel_positions_FoR_10(:,1),'xb');
+for i=1:NR_TAXELS
+   if ( ((i-1+TAXEL_ID_OFFSET_PALM_TO_HAND) == 107) || ((i-1+TAXEL_ID_OFFSET_PALM_TO_HAND) == 119) || ((i-1+TAXEL_ID_OFFSET_PALM_TO_HAND) == 131) || ((i-1+TAXEL_ID_OFFSET_PALM_TO_HAND) == 139) ) %thermal pads
+          text(taxel_positions_FoR_10(i,2),taxel_positions_FoR_10(i,1),int2str(i-1+TAXEL_ID_OFFSET_PALM_TO_HAND),'FontSize',8); 
+   elseif ( ((i-1+TAXEL_ID_OFFSET_PALM_TO_HAND) == 101) || ((i-1+TAXEL_ID_OFFSET_PALM_TO_HAND) == 103) || ((i-1+TAXEL_ID_OFFSET_PALM_TO_HAND) == 118) ...
+                || ((i-1+TAXEL_ID_OFFSET_PALM_TO_HAND) == 124)  || ((i-1+TAXEL_ID_OFFSET_PALM_TO_HAND) == 137)) %repr. taxels
+          text(taxel_positions_FoR_10(i,2),taxel_positions_FoR_10(i,1),int2str(i-1+TAXEL_ID_OFFSET_PALM_TO_HAND),'FontSize',14,'FontWeight','bold'); 
+   else
+            text(taxel_positions_FoR_10(i,2),taxel_positions_FoR_10(i,1),int2str(i-1+TAXEL_ID_OFFSET_PALM_TO_HAND),'FontSize',14); 
+   end
+end
+h = quiver(0 ,0, 10,0);
+set(h, 'Color', 'g', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on');
+text(5,0,'y','FontSize',14);
+h2 = quiver(0,0, 0,10);
+set(h2, 'Color', 'r', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on')
+text(0,5,'x','FontSize',14);
+ 
+
+xlabel('Taxel position y (mm)');
+set(gca,'XDir','reverse');
+ylabel('Taxel position x (mm)');
+axis equal;
+hold off;
+
+if SAVE_FIGURES
+    saveas(f3,'Taxel_positions_right_palm_FoR10_withThermalAndRepTaxels.fig');
+    print -f3 -djpeg 'Taxel_positions_right_palm_FoR10_withThermalAndRepTaxels.jpg';
+end
 
 %% prepare output
+
+if PRODUCE_OUTPUT_FILE
 
 % convert to meters
 for i=1:NR_TAXELS
@@ -106,3 +149,5 @@ end
 taxel_positions_and_normals_palm_and_fake_fingers_FoR_10_meters = [beginning_zeros ; taxel_positions_and_normals_FoR_10_meters; end_zeros];
 dlmwrite('right_hand.txt',taxel_positions_and_normals_palm_and_fake_fingers_FoR_10_meters,'delimiter', '\t', ...
          'precision', 5);
+     
+end
