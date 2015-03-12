@@ -1,0 +1,105 @@
+This is a 256.4 seconds  (4.3 min.) run we recorded on 5.11.2013 using Ale's doubleTouch code.
+
+    date: 5.11.2013
+    personnel: Ale + Matej 
+    icub: black 
+    code: SVN - /home/matej/programming/iCub/contrib/src/periPersonalSpace/ 
+    execute:  doubleTouch (--record 1?) + dataDumper - iCub_logVisionJointsSkinInertial.xml
+    protocol:
+    1. iCub touched on left forearm
+    2. iCub moves right arm, then left arm, trying to touch - Most of the time it was not successful - then it was touched by Ale to trigger the next iteration.
+    The joints were not set to idle and not moved by experimenters, so there is minimum skin activation. Only occassionaly, we made the robot touch the forearm by helping the index finger, 
+    or we touched the robot to prevent a collision...
+   
+ data recorded:
+   1) All joints ~ 100 Hz
+   The sampling rate osillates around 100 Hz, with increments mostly between 9 and 11 ms.
+   Total size: 16.5 MB
+   Number of data points in individual files:
+    Head joints:25370
+    Left arm joints:25389
+    Left leg joints:25448
+    Right arm joints:25404
+    Right leg joints:25469
+    Torso joints:25360
+   
+        <from>/icub/head/state:o</from>
+	<to>/data/joints/head_joints</to>
+	
+        <from>/icub/torso/state:o</from>
+        <to>/data/joints/torso_joints</to>
+         
+        <from>/icub/left_arm/state:o</from>
+        <to>/data/joints/leftArm_joints</to>
+       
+        <from>/icub/right_arm/state:o</from>
+        <to>/data/joints/rightArm_joints</to>
+     
+	<from>/icub/left_leg/state:o</from>
+        <to>/data/joints/leftLeg_joints</to>
+       
+        <from>/icub/right_leg/state:o</from>
+        <to>/data/joints/rightLeg_joints</to>
+      
+    2) Inertial ~ 100 Hz
+    Sampling, time steps oscillating, from about 5 ms to 12 or even 15 ms.    
+    Total size: 3.6 MB	
+    Inertial:25756 data points (rwos)
+    
+        <from>/icub/inertial</from>
+        <to>/data/inertial</to>
+     
+    3) Images ~ 30 Hz
+    7782 for left eye, 7786 for right eye
+    Every image is 230.4 kB. In total 3.6 GB for the 4 min. run.
+    Time stamps of images are in data.log in the folder with the images.
+    The sampling rate should be 30 fps, in reality it is oscillating the 33,3 ms between pics, mostly between 29 and 36 ms, with occassional higher peaks.
+       
+        <from>/icub/camcalib/left/out</from>
+        <to>/data/images/left</to>
+       
+        <from>/icub/camcalib/right/out</from>
+        <to>/data/images/right</to>
+       
+    
+    4) Skin ~ 50 Hz
+    Sampling at 50 Hz, every 20 ms, oscillating around, occassionaly takes longer - up to 40 ms (-> a data point missing?). These dropouts are not present in the skinContactList.
+    The taxel data was the compensated one. 
+    Total size: 175.4 MB, skinEvents in only 376 kB
+    
+    Skin Contact List readings:12781
+    Skin taxels left arm readings:12463
+    Skin taxels left forearm readings:12528
+    Skin taxels left hand readings:12589
+    Skin taxels right arm readings:12471
+    Skin taxels right forearm readings:12551
+    Skin taxels right hand readings:12591
+    Skin taxels torso readings:12579
+    
+    <from>/skinManager/skin_events:o</from>
+    <to>/data/skin/skin_events</to>
+  
+    <from>/icub/skin/left_hand_comp</from>
+    <to>/data/skin/tactile_comp_left_hand</to>
+ 
+    <from>/icub/skin/left_forearm_comp</from>
+    <to>/data/skin/tactile_comp_left_forearm</to>
+
+    <from>/icub/skin/left_arm_comp</from>
+    <to>/data/skin/tactile_comp_left_arm</to>
+
+    <from>/icub/skin/right_hand_comp</from>
+    <to>/data/skin/tactile_comp_right_hand</to>
+ 
+    <from>/icub/skin/right_forearm_comp</from>
+    <to>/data/skin/tactile_comp_right_forearm</to>
+
+    <from>/icub/skin/right_arm_comp</from>
+    <to>/data/skin/tactile_comp_right_arm</to>
+
+    <from>/icub/skin/torso_comp</from>
+    <to>/data/skin/tactile_comp_torso</to>
+     
+    
+Replay
+Data can be successfully replayed using: /home/matej/programming/iCub/contrib/src/periPersonalSpace/app/scripts/replaying/dataPlayer_jointsInertialSkinCompSkinEventsVision.xml
