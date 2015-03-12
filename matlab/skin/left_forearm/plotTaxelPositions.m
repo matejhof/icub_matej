@@ -1,5 +1,6 @@
 clear all;
 
+SAVE_FIGURES = false;
 %% Init taxel positions from Andrea's calibration and CAD
 
 load left_forearm_taxel_pos_mesh.mat; % the no_mesh is also possible, but there are no normals, so you can't overlay the triangular modules
@@ -252,7 +253,7 @@ hold on;
 first_taxel_ID = 252; 
 for i=1:12; % with i starting from 1, we get the conversion from taxel ID to row number in file
     if (nnz(taxel_pos(first_taxel_ID+i,:)) > 1) % it's not an all-zero row
-       if ((i==4) || (i==11)) %thermal pad
+       if ((i==7) || (i==11)) %thermal pad
         plot3(taxel_pos(first_taxel_ID+i,1),taxel_pos(first_taxel_ID+i,2),taxel_pos(first_taxel_ID+i,3),'ob');
        else % normal taxel
          plot3(taxel_pos(first_taxel_ID+i,1),taxel_pos(first_taxel_ID+i,2),taxel_pos(first_taxel_ID+i,3),'xb');  
@@ -285,7 +286,7 @@ hold on;
 first_taxel_ID = 312;
 for i=1:12;
     if (nnz(taxel_pos(first_taxel_ID+i,:)) > 1) % it's not an all-zero row
-       if ((i==4) || (i==11)) %thermal pad
+       if ((i==7) || (i==11)) %thermal pad
         plot3(taxel_pos(first_taxel_ID+i,1),taxel_pos(first_taxel_ID+i,2),taxel_pos(first_taxel_ID+i,3),'ob');
        else % normal taxel
          plot3(taxel_pos(first_taxel_ID+i,1),taxel_pos(first_taxel_ID+i,2),taxel_pos(first_taxel_ID+i,3),'xb');  
@@ -317,7 +318,7 @@ hold on;
 first_taxel_ID = 300;
 for i=1:12;
     if (nnz(taxel_pos(first_taxel_ID+i,:)) > 1) % it's not an all-zero row
-       if ((i==4) || (i==11)) %thermal pad
+       if ((i==7) || (i==11)) %thermal pad
         plot3(taxel_pos(first_taxel_ID+i,1),taxel_pos(first_taxel_ID+i,2),taxel_pos(first_taxel_ID+i,3),'ob');
        else % normal taxel
          plot3(taxel_pos(first_taxel_ID+i,1),taxel_pos(first_taxel_ID+i,2),taxel_pos(first_taxel_ID+i,3),'xb');  
@@ -353,7 +354,7 @@ hold on;
 first_taxel_ID = 288;
 for i=1:12;
     if (nnz(taxel_pos(first_taxel_ID+i,:)) > 1) % it's not an all-zero row
-       if ((i==4) || (i==11)) %thermal pad
+       if ((i==7) || (i==11)) %thermal pad
         plot3(taxel_pos(first_taxel_ID+i,1),taxel_pos(first_taxel_ID+i,2),taxel_pos(first_taxel_ID+i,3),'ob');
        else % normal taxel
          plot3(taxel_pos(first_taxel_ID+i,1),taxel_pos(first_taxel_ID+i,2),taxel_pos(first_taxel_ID+i,3),'xb');  
@@ -385,7 +386,7 @@ hold on;
 first_taxel_ID = 348;
 for i=1:12;
     if (nnz(taxel_pos(first_taxel_ID+i,:)) > 1) % it's not an all-zero row
-       if ((i==4) || (i==11)) %thermal pad
+       if ((i==7) || (i==11)) %thermal pad
         plot3(taxel_pos(first_taxel_ID+i,1),taxel_pos(first_taxel_ID+i,2),taxel_pos(first_taxel_ID+i,3),'ob');
        else % normal taxel
          plot3(taxel_pos(first_taxel_ID+i,1),taxel_pos(first_taxel_ID+i,2),taxel_pos(first_taxel_ID+i,3),'xb');  
@@ -417,7 +418,7 @@ hold on;
 first_taxel_ID = 336;
 for i=1:12;
     if (nnz(taxel_pos(first_taxel_ID+i,:)) > 1) % it's not an all-zero row
-       if ((i==4) || (i==11)) %thermal pad
+       if ((i==7) || (i==11)) %thermal pad
         plot3(taxel_pos(first_taxel_ID+i,1),taxel_pos(first_taxel_ID+i,2),taxel_pos(first_taxel_ID+i,3),'ob');
        else % normal taxel
          plot3(taxel_pos(first_taxel_ID+i,1),taxel_pos(first_taxel_ID+i,2),taxel_pos(first_taxel_ID+i,3),'xb');  
@@ -449,7 +450,7 @@ hold on;
 first_taxel_ID = 204;
 for i=1:12;
     if (nnz(taxel_pos(first_taxel_ID+i,:)) > 1) % it's not an all-zero row
-       if ((i==4) || (i==11)) %thermal pad
+       if ((i==7) || (i==11)) %thermal pad
         plot3(taxel_pos(first_taxel_ID+i,1),taxel_pos(first_taxel_ID+i,2),taxel_pos(first_taxel_ID+i,3),'ob');
        else % normal taxel
          plot3(taxel_pos(first_taxel_ID+i,1),taxel_pos(first_taxel_ID+i,2),taxel_pos(first_taxel_ID+i,3),'xb');  
@@ -780,22 +781,23 @@ axis equal;
 
 
 %% save figures
-
-saveas(f1,'Taxel_positions_left_forearm.fig');
-print -f1 -djpeg 'Taxel_positions_left_forearm.jpg';
-saveas(f2,'Taxel_positions_left_forearm_lowerBigPatch.fig');
-print -f2 -djpeg 'Taxel_positions_left_forearm_lowerBigPatch.jpg';
-saveas(f3,'Taxel_positions_left_forearm_upperSmallPatch.fig');
-print -f3 -djpeg 'Taxel_positions_left_forearm_upperSmallPatch.jpg';
-saveas(f31,'TriangleCenters_left_forearm_upperSmallPatch_CAD.fig');
-print -f31 -djpeg 'TriangleCenters_left_forearm_upperSmallPatch_CAD.jpg';
-saveas(f32,'Taxel_positions_left_forearm_upperSmallPatch_delPreteAndCAD.fig');
-print -f32 -djpeg 'Taxel_positions_left_forearm_upperSmallPatch_delPreteAndCAD.jpg';
-saveas(f4,'Taxel_positions_left_forearm_upperSmallPatch_allPlusFirstThreeTrianglesIndividually.fig');
-print -f4 -djpeg 'Taxel_positions_left_forearm_upperSmallPatch_allPlusFirstThreeTrianglesIndividually.jpg';
-saveas(f4,'Taxel_positions_left_forearm_upperSmallPatch_lastFourTrianglesIndividually.fig');
-print -f4 -djpeg 'Taxel_positions_left_forearm_upperSmallPatch_lastFourTrianglesIndividually.jpg';
-saveas(f6,'Taxel_positions_left_forearm_upperSmallPatch_OneTriangularModuleOverlayed.fig');
-print -f6 -djpeg 'Taxel_positions_left_forearm_upperSmallPatch_OneTriangularModuleOverlayed.jpg';
-saveas(f61,'Taxel_positions_left_forearm_lowerBigPatch_OneTriangularModuleOverlayed.fig');
-print -f61 -djpeg 'Taxel_positions_left_forearm_lowerBigPatch_OneTriangularModuleOverlayed.jpg';
+if SAVE_FIGURES
+    saveas(f1,'Taxel_positions_left_forearm.fig');
+    print -f1 -djpeg 'Taxel_positions_left_forearm.jpg';
+    saveas(f2,'Taxel_positions_left_forearm_lowerBigPatch.fig');
+    print -f2 -djpeg 'Taxel_positions_left_forearm_lowerBigPatch.jpg';
+    saveas(f3,'Taxel_positions_left_forearm_upperSmallPatch.fig');
+    print -f3 -djpeg 'Taxel_positions_left_forearm_upperSmallPatch.jpg';
+    saveas(f31,'TriangleCenters_left_forearm_upperSmallPatch_CAD.fig');
+    print -f31 -djpeg 'TriangleCenters_left_forearm_upperSmallPatch_CAD.jpg';
+    saveas(f32,'Taxel_positions_left_forearm_upperSmallPatch_delPreteAndCAD.fig');
+    print -f32 -djpeg 'Taxel_positions_left_forearm_upperSmallPatch_delPreteAndCAD.jpg';
+    saveas(f4,'Taxel_positions_left_forearm_upperSmallPatch_allPlusFirstThreeTrianglesIndividually.fig');
+    print -f4 -djpeg 'Taxel_positions_left_forearm_upperSmallPatch_allPlusFirstThreeTrianglesIndividually.jpg';
+    saveas(f4,'Taxel_positions_left_forearm_upperSmallPatch_lastFourTrianglesIndividually.fig');
+    print -f4 -djpeg 'Taxel_positions_left_forearm_upperSmallPatch_lastFourTrianglesIndividually.jpg';
+    saveas(f6,'Taxel_positions_left_forearm_upperSmallPatch_OneTriangularModuleOverlayed.fig');
+    print -f6 -djpeg 'Taxel_positions_left_forearm_upperSmallPatch_OneTriangularModuleOverlayed.jpg';
+    saveas(f61,'Taxel_positions_left_forearm_lowerBigPatch_OneTriangularModuleOverlayed.fig');
+    print -f61 -djpeg 'Taxel_positions_left_forearm_lowerBigPatch_OneTriangularModuleOverlayed.jpg';
+end
