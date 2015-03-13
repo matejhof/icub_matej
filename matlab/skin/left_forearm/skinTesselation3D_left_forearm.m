@@ -509,6 +509,8 @@ end
         %  ht = plot3(x,y,z,'--.r');
      
  end
+ plot3(triangle_centers_CAD(4,1),triangle_centers_CAD(4,2),triangle_centers_CAD(4,3),'or');
+text(triangle_centers_CAD(4,1),triangle_centers_CAD(4,2),triangle_centers_CAD(4,3),'291','BackgroundColor','red'); 
  
 % triangle midpoint FoR
 AXIS_LENGTH_MULTIPLIER = 1/100; % downsize normal axes length to match scale
