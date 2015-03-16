@@ -60,7 +60,214 @@ triangle_centers_CAD = triangle_centers_CAD_wristFoR8;
        text(triangle_centers_CAD(6,1),triangle_centers_CAD(6,2),triangle_centers_CAD(6,3),'315','BackgroundColor','red');  
        
        plot3(triangle_centers_CAD(7,1),triangle_centers_CAD(7,2),triangle_centers_CAD(7,3),'or');
-       text(triangle_centers_CAD(7,1),triangle_centers_CAD(7,2),triangle_centers_CAD(7,3),'255','BackgroundColor','red'); 
+       text(triangle_centers_CAD(7,1),triangle_centers_CAD(7,2),triangle_centers_CAD(7,3),'255','BackgroundColor','red');
+       
+       
+% edit by Martin Varga 16. march 2015
+
+% translation of sensor cordinates to match red centers
+    translated_coordinates = zeros(384, 3); % new coordinates (x, y, z)
+    min_max = zeros(7, 6);
+    pom = [1, 1, 1, -1, -1, -1];
+    for i= 1:7, 
+        min_max(i,:) = pom;
+    end    
+% triangle center 207
+    trans_207 = zeros(1,3);
+    trans_207(1,1) = taxel_pos(208,1) - triangle_centers_CAD(1,1);
+    trans_207(1,2) = taxel_pos(208,2) - triangle_centers_CAD(1,2);
+    trans_207(1,3) = taxel_pos(208,3) - triangle_centers_CAD(1,3);
+    
+    for i= 205:216,
+        for j=1:3
+            translated_coordinates(i, j) = taxel_pos(i,j) - trans_207(1,j);
+        end
+    end
+    
+    for i= 205:216,
+        for j=1:3
+            if translated_coordinates(i, j) < min_max(1, j)
+                min_max(1, j) = translated_coordinates(i, j);
+            end
+            if translated_coordinates(i, j) > min_max(1, j + 3)
+                min_max(1, j + 3) = translated_coordinates(i, j);
+            end    
+        end
+    end
+    
+% triangle center 255
+    trans_255 = zeros(1,3);
+    trans_255(1,1) = taxel_pos(256,1) - triangle_centers_CAD(7,1);
+    trans_255(1,2) = taxel_pos(256,2) - triangle_centers_CAD(7,2);
+    trans_255(1,3) = taxel_pos(256,3) - triangle_centers_CAD(7,3);
+    
+    for i= 253:264,
+        for j=1:3
+            translated_coordinates(i, j) = taxel_pos(i,j) - trans_255(1,j);
+        end
+    end
+    
+    for i= 253:264,
+        for j=1:3
+            if translated_coordinates(i, j) < min_max(2, j)
+                min_max(2, j) = translated_coordinates(i, j);
+            end
+            if translated_coordinates(i, j) > min_max(2, j + 3)
+                min_max(2, j + 3) = translated_coordinates(i, j);
+            end    
+        end
+    end    
+    
+
+% triangle center 291
+    trans_291 = zeros(1,3);
+    trans_291(1,1) = taxel_pos(292,1) - triangle_centers_CAD(4,1);
+    trans_291(1,2) = taxel_pos(292,2) - triangle_centers_CAD(4,2);
+    trans_291(1,3) = taxel_pos(292,3) - triangle_centers_CAD(4,3);
+    
+    for i= 289:300,
+        for j=1:3
+            translated_coordinates(i, j) = taxel_pos(i,j) - trans_291(1,j);
+        end
+    end
+    
+    for i= 289:300,
+        for j=1:3
+            if translated_coordinates(i, j) < min_max(3, j)
+                min_max(3, j) = translated_coordinates(i, j);
+            end
+            if translated_coordinates(i, j) > min_max(3, j + 3)
+                min_max(3, j + 3) = translated_coordinates(i, j);
+            end    
+        end
+    end 
+    
+% triangle center 303
+    trans_303 = zeros(1,3);
+    trans_303(1,1) = taxel_pos(304,1) - triangle_centers_CAD(5,1);
+    trans_303(1,2) = taxel_pos(304,2) - triangle_centers_CAD(5,2);
+    trans_303(1,3) = taxel_pos(304,3) - triangle_centers_CAD(5,3);
+    
+    for i= 301:312,
+        for j=1:3
+            translated_coordinates(i, j) = taxel_pos(i,j) - trans_303(1,j);
+        end
+    end
+    
+    for i= 301:312,
+        for j=1:3
+            if translated_coordinates(i, j) < min_max(4, j)
+                min_max(4, j) = translated_coordinates(i, j);
+            end
+            if translated_coordinates(i, j) > min_max(4, j + 3)
+                min_max(4, j + 3) = translated_coordinates(i, j);
+            end    
+        end
+    end 
+    
+% triangle center 315
+    trans_315 = zeros(1,3);
+    trans_315(1,1) = taxel_pos(316,1) - triangle_centers_CAD(6,1);
+    trans_315(1,2) = taxel_pos(316,2) - triangle_centers_CAD(6,2);
+    trans_315(1,3) = taxel_pos(316,3) - triangle_centers_CAD(6,3);
+    
+    for i= 313:324,
+        for j=1:3
+            translated_coordinates(i, j) = taxel_pos(i,j) - trans_315(1,j);
+        end
+    end
+    
+    for i= 313:324,
+        for j=1:3
+            if translated_coordinates(i, j) < min_max(5, j)
+                min_max(5, j) = translated_coordinates(i, j);
+            end
+            if translated_coordinates(i, j) > min_max(5, j + 3)
+                min_max(5, j + 3) = translated_coordinates(i, j);
+            end    
+        end
+    end
+   
+% triangle center 339
+    trans_339 = zeros(1,3);
+    trans_339(1,1) = taxel_pos(340,1) - triangle_centers_CAD(2,1);
+    trans_339(1,2) = taxel_pos(340,2) - triangle_centers_CAD(2,2);
+    trans_339(1,3) = taxel_pos(340,3) - triangle_centers_CAD(2,3);
+    
+    for i= 337:348,
+        for j=1:3
+            translated_coordinates(i, j) = taxel_pos(i,j) - trans_339(1,j);
+        end
+    end
+    
+    for i= 337:348,
+        for j=1:3
+            if translated_coordinates(i, j) < min_max(6, j)
+                min_max(6, j) = translated_coordinates(i, j);
+            end
+            if translated_coordinates(i, j) > min_max(6, j + 3)
+                min_max(6, j + 3) = translated_coordinates(i, j);
+            end    
+        end
+    end
+     
+% triangle center 351
+    trans_351 = zeros(1,3);
+    trans_351(1,1) = taxel_pos(352,1) - triangle_centers_CAD(3,1);
+    trans_351(1,2) = taxel_pos(352,2) - triangle_centers_CAD(3,2);
+    trans_351(1,3) = taxel_pos(352,3) - triangle_centers_CAD(3,3);
+    
+    for i= 349:360,
+        for j=1:3
+            translated_coordinates(i, j) = taxel_pos(i,j) - trans_351(1,j);
+        end
+    end
+    
+    for i= 349:360,
+        for j=1:3
+            if translated_coordinates(i, j) < min_max(7, j)
+                min_max(7, j) = translated_coordinates(i, j);
+            end
+            if translated_coordinates(i, j) > min_max(7, j + 3)
+                min_max(7, j + 3) = translated_coordinates(i, j);
+            end    
+        end
+    end    
+    
+% plot new coordinates    
+for i=193:M
+    if (nnz(translated_coordinates(i,:)) > 1) % it's not an all-zero row
+       plot3(translated_coordinates(i,1),translated_coordinates(i,2),translated_coordinates(i,3),'ob');
+       text(taxel_pos(i,1),taxel_pos(i,2),taxel_pos(i,3),int2str(i-1)); 
+    end
+end 
+
+% draws "rectangles"
+for i= 1:7
+    %uncoment to see line conecting minimal and maximal point of rectangle 
+    %plot3([min_max(i,1) min_max(i,4)],[min_max(i,2) min_max(i,5)],[min_max(i,3) min_max(i,6)]);
+    
+    plot3([min_max(i,1) min_max(i,4)],[min_max(i,5) min_max(i,5)],[min_max(i,3) min_max(i,3)]);
+    plot3([min_max(i,4) min_max(i,4)],[min_max(i,5) min_max(i,5)],[min_max(i,3) min_max(i,6)]);
+    plot3([min_max(i,4) min_max(i,1)],[min_max(i,5) min_max(i,5)],[min_max(i,6) min_max(i,6)]);
+    plot3([min_max(i,1) min_max(i,1)],[min_max(i,5) min_max(i,5)],[min_max(i,3) min_max(i,6)]);
+    
+    plot3([min_max(i,1) min_max(i,4)],[min_max(i,2) min_max(i,2)],[min_max(i,3) min_max(i,3)]);
+    plot3([min_max(i,4) min_max(i,4)],[min_max(i,2) min_max(i,2)],[min_max(i,3) min_max(i,6)]);
+    plot3([min_max(i,4) min_max(i,1)],[min_max(i,2) min_max(i,2)],[min_max(i,6) min_max(i,6)]);
+    plot3([min_max(i,1) min_max(i,1)],[min_max(i,2) min_max(i,2)],[min_max(i,3) min_max(i,6)]);
+    
+    plot3([min_max(i,1) min_max(i,1)],[min_max(i,2) min_max(i,5)],[min_max(i,3) min_max(i,3)]);
+    plot3([min_max(i,4) min_max(i,4)],[min_max(i,2) min_max(i,5)],[min_max(i,3) min_max(i,3)]);
+    plot3([min_max(i,4) min_max(i,4)],[min_max(i,2) min_max(i,5)],[min_max(i,6) min_max(i,6)]);
+    plot3([min_max(i,1) min_max(i,1)],[min_max(i,2) min_max(i,5)],[min_max(i,6) min_max(i,6)]);
+    
+    
+    
+end
+
+
+% end of Martin Varga 2015
 
 
  h = quiver3(0 ,0, 0,0.02,0,0);
