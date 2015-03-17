@@ -8,3 +8,22 @@ load('...\homunculus_bakalarka\torso\taxPosTorso.mat')
 a pak zavolas plotTaxels(M,'capt')
 
 a mel bys dostat to co chces(mozna az na -1 v poradi).
+
+
+
+Jak ty fily vznikly: 
+Takze pro vytvoreni matice s pozicemi nedrive zavolej generovaniPosTaxForearm (ta si zavola createTaxelPos). Pro zobrazeni s popisky pak zavolej plotTaxels(M,'capt'). Pokud bys to chtel bez popisku tak to zavolej bez toho 'capt'. 
+
+obsirnejsi popis:
+Vsechno vychazi z toho excelovskyho souboru. Tam jsou souradnice trojuhelniku(ve dvou ruznych souradnicovych systemech, pouzil jsme ten obecnejsi a pak jsme to sam prepocital do toho co je v te vizualizaci jak jsi posilal-ale to uz je technicky detail). Takze jsme prekopiroval souradnice trojuhleniku z excelu(vcetne jejich uhlu natoceni) a spravne je seradil(podle toho obrazkuv tom excel. souboru)-podle toho se pak cislujou ty taxely. Takze prvni trojuhelnik ma 1-12 id taxely, druhy trojuhelnik ma 13-24 id taxely atd. a pak jsem jeste prekopiroval souradnice taxelu uvnitr trojuhleniku. Takze ta funkce si vezme souradnice trojuhelniku a pak tam narve ty taxely(dulezity je uhel toho trojuhelniku), vezme dalsi trojuhelnik narve dalsi taxely a takhle uklada souradnice taxelu do matice a zaroven vytvari jejich id. Pak jsou tam trojuhelniky/taxely nevyuzite ale maji taky sve id, tak ty se do ty matice ulozi taky, ale v te matici s taxelama se jeste uklada parametr jestli je ten taxel viditelny, tak se jim tam nastavi nula pokud neni.
+Takze vstupni soubor se nenacita(je to par trojuhelniku a lehce se to z excelu zkopiruje) ale zada se do skriptu rucne a ten to pak preda ty funkci ktera tvori ty pozice taxelu. Navic v tom excelu nejsou spravne serazeny a to razeni de poznat nejspis jen z tech obrazku takze by to stejne matlab tezko nejak poznal.
+Takze ja zadam souradnice trojuhleniku a taxelu uvnitr a to mi vytvori pozice taxelu. Pak jeste musim provest nejakou rotaci, posun a zrcadleni abych to dostal do stejnych pozic jako to je v tom videu(parametry se daji zjistit v tom excel. souboru), ale to uz je hodne jednoduche.
+Moc jsme se nevyznal v tech funkcich ktere se pouzivaji pro ty animace. Proto jsme vychazel z tech dat v excel. souboru.
+Jsou tam jeste nejake dalsi technicke detaily jako treba, ze se na zacatku rekne ktere trojuhelniky jsou viditelne a ktere neviditelne, obdobne u taxelu(daji se tak zneviditelnit ty na mereni teploty).
+
+Takze kdyz to shrnu. Na zacatku se zada pozice trojuhelniku a pozice taxelu uvnitr trojuhelniku. Z toho se vytvori pozice taxelu. ID taxelu je urceno tim v kterem trojuhelniku jsou(na jeho poradi) a pozici uvnitr trojuhelniku(opet poradi). Pak se jeste musi provest nejaky tranformace aby to bylo ve stejnych souranicich jako v tom videu(to by se ani teoreticky nemuselo protoze uz je to prepocitany v tom excel. souboru, ale udelal jsme si to obecneji abych pak s tim mohl pak hned lepe manipulovat az jich tam bude vice). 
+
+Cili: 
+Pouzily se ty inigenerators, Zdenek prekodil do skriptu typu: /media/Data/projects/student/CVUT/icub_biodat_repo/data/ostatni/homunculus_bakalarka/rightUpperarm/generovaniPosTaxrUpperarm.m
+z toho vznikne ta matice M. 
+Pro plotnuti s taxel ID, pouzij plotTaxelsPOSUNUTE.m

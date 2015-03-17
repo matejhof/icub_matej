@@ -1,0 +1,4 @@
+/home/matej/programming/my_stuff/icub_matej/matlab/skin/plotSkinParts2D
+/media/Data/my_matlab/skin/left_forearm/zdenek_code
+/media/Data/projects/student/CVUT/icub_biodat_repo/data/ostatni/homunculus_bakalarka
+https://biodata.felk.cvut.cz/biolab/incognite/icub/data/ostatni/homunculus_bakalarka/
