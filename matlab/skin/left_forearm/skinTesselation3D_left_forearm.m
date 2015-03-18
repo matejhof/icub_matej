@@ -240,7 +240,35 @@ for i=193:M
        plot3(translated_coordinates(i,1),translated_coordinates(i,2),translated_coordinates(i,3),'ob');
        text(taxel_pos(i,1),taxel_pos(i,2),taxel_pos(i,3),int2str(i-1)); 
     end
-end 
+end
+
+%manual corections
+%291 351 x
+a  = mean([min_max(3, 1);min_max(7, 4)]);
+min_max(3, 1) = a;
+min_max(7, 4) = a;
+%303 291 x
+a  = mean([min_max(4, 1 );min_max(3, 4)]);
+min_max(4, 1) = a;
+min_max(3, 4) = a;
+%303 315 y
+a  = mean([min_max(4, 2 );min_max(5, 5)]);
+min_max(4, 2) = a;
+min_max(5, 5) = a;
+%255 315 x
+a  = mean([min_max(2, 1 );min_max(5, 4)]);
+min_max(2, 1) = a;
+min_max(5, 4) = a;
+%351 339 y
+a  = mean([min_max(7, 2 );min_max(6, 5)]);
+min_max(7, 2) = a;
+min_max(6, 5) = a;
+%339 207 x
+a  = mean([min_max(6, 1 );min_max(1, 4)]);
+min_max(6, 1) = a;
+min_max(1, 4) = a;
+
+
 
 % draws "rectangles"
 for i= 1:7
