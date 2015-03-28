@@ -63,7 +63,12 @@ triangle_centers_CAD = triangle_centers_CAD_wristFoR8;
        text(triangle_centers_CAD(7,1),triangle_centers_CAD(7,2),triangle_centers_CAD(7,3),'255','BackgroundColor','red');
        
        
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % edit by Martin Varga 16. march 2015
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 % translation of sensor cordinates to match red centers
     translated_coordinates = zeros(384, 3); % new coordinates (x, y, z)
@@ -268,6 +273,73 @@ a  = mean([min_max(6, 1 );min_max(1, 4)]);
 min_max(6, 1) = a;
 min_max(1, 4) = a;
 
+%manual corrections 2 (x acording to y axis)
+
+% 3 middle triangles
+a  = mean([ - min_max(3, 1);min_max(3, 4)]);
+min_max(3, 1) = - a;
+min_max(3, 4) = a;
+min_max(7, 4) = - a;
+min_max(4, 1) = a;
+
+% 315 330
+min_max(5, 1) = - min_max(6, 4);
+min_max(5, 4) = - min_max(6, 1);
+
+% 315 255
+min_max(2, 1) =  min_max(5, 4);
+
+% 255 207 
+a  = mean([min_max(2, 4); - min_max(1, 1)]);
+a = a;
+min_max(2, 4) = a;
+min_max(1, 1) = - a;
+
+% 315 339 max y 303 351 min y
+a  = mean([min_max(5, 5);  min_max(6, 5)]);
+min_max(5, 5) = a;
+min_max(6, 5) = a;
+min_max(7, 2) = a;
+min_max(4, 2) = a;
+
+%255 207 y
+a  = max([min_max(1, 5);  min_max(2, 5)]);
+min_max(1, 5) = a;
+min_max(2, 5) = a;
+
+a  = min([min_max(1, 2);  min_max(2, 2)]);
+min_max(1, 2) = a;
+min_max(2, 2) = a;
+
+%315 339 min y
+a  = min([min_max(5, 2);  min_max(6, 2)]);
+min_max(5, 2) = a;
+min_max(6, 2) = a;
+
+%303 351 max y
+min_max(4, 5) = min_max(7, 5);
+
+%351 min x
+min_max(7, 1) = - min_max(4, 4);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%maybe unnecesary no gaps correction (you can delete this block)
+
+% 291
+min_max(3, 2) = min_max(5, 5);
+
+% 207
+min_max(1, 5) = min_max(5, 5);
+
+%255
+min_max(2, 5) = min_max(5, 5);
+
+%315
+min_max(5, 1) = 0;
+
+%339
+min_max(6, 4) = 0;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 % draws "rectangles"
@@ -294,8 +366,9 @@ for i= 1:7
     
 end
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % end of Martin Varga 2015
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
  h = quiver3(0 ,0, 0,0.02,0,0);
