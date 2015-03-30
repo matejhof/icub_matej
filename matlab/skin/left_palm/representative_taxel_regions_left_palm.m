@@ -3,7 +3,8 @@
 
 clear; clc;
 
-SAVE_FIGURES = true;
+SAVE_FIGURES = false;
+EXTRA_MARGIN_mm = 30;
 
 %% load stuff
 %load('taxel_positions_left_palm_Marco');
@@ -78,7 +79,6 @@ end
        
 %% visualize   
 
-
 f2 = figure(2);
 clf(f2);
 length = 10; % for ref. frame
@@ -97,30 +97,50 @@ h = quiver(0 ,0, 10,0);
 set(h, 'Color', 'g', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on');
 text(5,0,'y');
 h2 = quiver(0,0, 0,10);
-set(h2, 'Color', 'r', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on')
+set(h2, 'Color', 'b', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on')
 text(0,5,'x');
 
 %  line([x0 x1],[y0 y1],'Color','r','LineStyle','--','Marker','x'); 
 % vertical lines
-line([-26 -26],[-12 3],'Color','r','LineStyle','--','Marker','x'); 
-line([-5.5 -5.5],[-12 3],'Color','r','LineStyle','--','Marker','x'); 
-line([10 10],[-14 3],'Color','r','LineStyle','--','Marker','x'); 
-line([0 0],[-14 -40],'Color','r','LineStyle','--','Marker','x'); 
-line([30 30],[-40 3],'Color','r','LineStyle','--','Marker','x'); 
+line([-26 -26],[-12 3],'Color','k','LineStyle','--','Marker','x'); 
+line([-5.5 -5.5],[-12 3],'Color','k','LineStyle','--','Marker','x'); 
+line([10 10],[-14 3],'Color','k','LineStyle','--','Marker','x'); 
+line([0 0],[-14 -40],'Color','k','LineStyle','--','Marker','x'); 
+line([30 30],[-40 3],'Color','k','LineStyle','--','Marker','x'); 
 % horizontal lines
-line([-25 30],[3 3],'Color','r','LineStyle','--','Marker','x');
-line([-25 10],[-12 -12],'Color','r','LineStyle','--','Marker','x');
-line([0 30],[-14 -14],'Color','r','LineStyle','--','Marker','x'); 
-line([0 30],[-24 -24],'Color','r','LineStyle','--','Marker','x'); 
-line([0 30],[-40 -40],'Color','r','LineStyle','--','Marker','x');
+line([-26 30],[3 3],'Color','k','LineStyle','--','Marker','x');
+line([-26 10],[-12 -12],'Color','k','LineStyle','--','Marker','x');
+line([0 30],[-14 -14],'Color','k','LineStyle','--','Marker','x'); 
+line([0 30],[-24 -24],'Color','k','LineStyle','--','Marker','x'); 
+line([0 30],[-40 -40],'Color','k','LineStyle','--','Marker','x');
 
-ylim([-42 10]);
-xlim([-30 30]);
+if EXTRA_MARGIN_mm
+    % vertical lines
+    line([-26-EXTRA_MARGIN_mm  -26-EXTRA_MARGIN_mm],[-12-2 3+EXTRA_MARGIN_mm],'Color','r','LineStyle','--','Marker','x'); 
+    line([-5.5 -5.5],[-12-2 3+EXTRA_MARGIN_mm],'Color','r','LineStyle','--','Marker','x'); 
+    line([10 10],[-14 3+EXTRA_MARGIN_mm],'Color','r','LineStyle','--','Marker','x'); 
+    line([0-EXTRA_MARGIN_mm 0-EXTRA_MARGIN_mm],[-14 -40-EXTRA_MARGIN_mm],'Color','r','LineStyle','--','Marker','x'); 
+    line([30+EXTRA_MARGIN_mm 30+EXTRA_MARGIN_mm],[-40-EXTRA_MARGIN_mm 3+EXTRA_MARGIN_mm],'Color','r','LineStyle','--','Marker','x'); 
+    % horizontal lines
+    line([-26-EXTRA_MARGIN_mm 30+EXTRA_MARGIN_mm],[3+EXTRA_MARGIN_mm 3+EXTRA_MARGIN_mm],'Color','r','LineStyle','--','Marker','x');
+    line([-26-EXTRA_MARGIN_mm 10],[-12-2 -12-2],'Color','r','LineStyle','--','Marker','x');
+    line([0-EXTRA_MARGIN_mm 30+EXTRA_MARGIN_mm],[-14 -14],'Color','r','LineStyle','--','Marker','x'); 
+    line([0-EXTRA_MARGIN_mm 30+EXTRA_MARGIN_mm],[-24 -24],'Color','r','LineStyle','--','Marker','x'); 
+    line([0-EXTRA_MARGIN_mm 30+EXTRA_MARGIN_mm],[-40-EXTRA_MARGIN_mm -40-EXTRA_MARGIN_mm],'Color','r','LineStyle','--','Marker','x');
+    
+    ylim([-42-EXTRA_MARGIN_mm 10+EXTRA_MARGIN_mm]);
+    xlim([-30-EXTRA_MARGIN_mm 30+EXTRA_MARGIN_mm]);
+else
+    ylim([-42 10]);
+    xlim([-30 30]);
+end
 xlabel('Taxel position y (mm)');
 ylabel('Taxel position x (mm)');
 axis equal;
 grid on;
 hold off;
+
+%% save figures
 
 if SAVE_FIGURES
     saveas(f2,'Taxel_positions_left_palm_FoR10_withRepTaxelRegions.fig');
