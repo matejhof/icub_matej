@@ -5,7 +5,7 @@
   <module>
      <name>yarpdataplayer</name>
      <node>localhost</node>
-     <parameters>–withExtraTimeCol 1 --xpos 0 --ypos 0</parameters> 
+     <parameters>--withExtraTimeCol 1 --xpos 0 --ypos 0</parameters> 
      <tag>yarpdataplayer</tag>	
   </module>
  
