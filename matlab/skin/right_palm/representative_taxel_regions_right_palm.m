@@ -78,19 +78,19 @@ line([0 30],[-40 -40],'Color','k','LineStyle','--','Marker','x');
 
 if EXTRA_MARGIN_mm
     % vertical lines
-    line([-26-EXTRA_MARGIN_mm-1.5*MORE_EXTRA_MARGIN_mm  -26-EXTRA_MARGIN_mm-1.5*MORE_EXTRA_MARGIN_mm],[-12-2 3+3*EXTRA_MARGIN_mm+MORE_EXTRA_MARGIN_mm],'Color','r','LineStyle','--','Marker','x'); 
-    line([-5.5 -5.5],[-12-2 3+3*EXTRA_MARGIN_mm+MORE_EXTRA_MARGIN_mm],'Color','r','LineStyle','--','Marker','x'); 
-    line([10 10],[-14 3+3*EXTRA_MARGIN_mm+MORE_EXTRA_MARGIN_mm],'Color','r','LineStyle','--','Marker','x'); 
-    line([0-EXTRA_MARGIN_mm-MORE_EXTRA_MARGIN_mm 0-EXTRA_MARGIN_mm-MORE_EXTRA_MARGIN_mm],[-14 -40-EXTRA_MARGIN_mm-2*MORE_EXTRA_MARGIN_mm],'Color','r','LineStyle','--','Marker','x'); 
-    line([30+EXTRA_MARGIN_mm 30+EXTRA_MARGIN_mm],[-40-EXTRA_MARGIN_mm-2*MORE_EXTRA_MARGIN_mm 3+3*EXTRA_MARGIN_mm+MORE_EXTRA_MARGIN_mm],'Color','r','LineStyle','--','Marker','x'); 
+    line([-26-EXTRA_MARGIN_mm-1.5*MORE_EXTRA_MARGIN_mm  -26-EXTRA_MARGIN_mm-1.5*MORE_EXTRA_MARGIN_mm],[-12-2 3+MORE_EXTRA_MARGIN_mm],'Color','r','LineStyle','--','Marker','x'); 
+    line([-5.5 -5.5],[-12-2 3+MORE_EXTRA_MARGIN_mm],'Color','r','LineStyle','--','Marker','x'); 
+    line([10 10],[-14 3+MORE_EXTRA_MARGIN_mm],'Color','r','LineStyle','--','Marker','x'); 
+    line([0-EXTRA_MARGIN_mm-2*MORE_EXTRA_MARGIN_mm 0-EXTRA_MARGIN_mm-2*MORE_EXTRA_MARGIN_mm],[-14 -40-EXTRA_MARGIN_mm-2*MORE_EXTRA_MARGIN_mm],'Color','r','LineStyle','--','Marker','x'); 
+    line([30+EXTRA_MARGIN_mm 30+EXTRA_MARGIN_mm],[-40-EXTRA_MARGIN_mm-2*MORE_EXTRA_MARGIN_mm 3+MORE_EXTRA_MARGIN_mm],'Color','r','LineStyle','--','Marker','x'); 
     % horizontal lines
-    line([-26-EXTRA_MARGIN_mm-1.5*MORE_EXTRA_MARGIN_mm 30+EXTRA_MARGIN_mm],[3+3*EXTRA_MARGIN_mm+MORE_EXTRA_MARGIN_mm 3+3*EXTRA_MARGIN_mm+MORE_EXTRA_MARGIN_mm],'Color','r','LineStyle','--','Marker','x');
+    line([-26-EXTRA_MARGIN_mm-1.5*MORE_EXTRA_MARGIN_mm 30+EXTRA_MARGIN_mm],[3+MORE_EXTRA_MARGIN_mm 3+MORE_EXTRA_MARGIN_mm],'Color','r','LineStyle','--','Marker','x');
     line([-26-EXTRA_MARGIN_mm-1.5*MORE_EXTRA_MARGIN_mm 10],[-12-2 -12-2],'Color','r','LineStyle','--','Marker','x');
     line([0-EXTRA_MARGIN_mm 30+EXTRA_MARGIN_mm],[-14 -14],'Color','r','LineStyle','--','Marker','x'); 
-    line([0-EXTRA_MARGIN_mm-MORE_EXTRA_MARGIN_mm 30+EXTRA_MARGIN_mm],[-24 -24],'Color','r','LineStyle','--','Marker','x'); 
-    line([0-EXTRA_MARGIN_mm-MORE_EXTRA_MARGIN_mm 30+EXTRA_MARGIN_mm],[-40-EXTRA_MARGIN_mm-2*MORE_EXTRA_MARGIN_mm -40-EXTRA_MARGIN_mm-2*MORE_EXTRA_MARGIN_mm],'Color','r','LineStyle','--','Marker','x');
+    line([0-EXTRA_MARGIN_mm-2*MORE_EXTRA_MARGIN_mm 30+EXTRA_MARGIN_mm],[-24 -24],'Color','r','LineStyle','--','Marker','x'); 
+    line([0-EXTRA_MARGIN_mm-2*MORE_EXTRA_MARGIN_mm 30+EXTRA_MARGIN_mm],[-40-EXTRA_MARGIN_mm-2*MORE_EXTRA_MARGIN_mm -40-EXTRA_MARGIN_mm-2*MORE_EXTRA_MARGIN_mm],'Color','r','LineStyle','--','Marker','x');
     
-    ylim([-42-EXTRA_MARGIN_mm-2*MORE_EXTRA_MARGIN_mm 10+3*EXTRA_MARGIN_mm]);
+    ylim([-42-EXTRA_MARGIN_mm-2*MORE_EXTRA_MARGIN_mm 10+MORE_EXTRA_MARGIN_mm]);
     xlim([-30-EXTRA_MARGIN_mm 30+EXTRA_MARGIN_mm]);
 else
     ylim([-42 10]);
