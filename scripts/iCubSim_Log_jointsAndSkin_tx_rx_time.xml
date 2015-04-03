@@ -1,5 +1,5 @@
 <application>
-    <name>icubSim_Logging</name>
+    <name>icubSim_Log_JointsAndSkinForearmsAndHands</name>
 
     <dependencies>
     </dependencies>
@@ -26,13 +26,13 @@
         <stdio></stdio>
         <tag>yarpdatadumperSkinLeftForearmComp</tag>
     </module>
-    <module>
+    <!--module>
         <name>yarpdatadumper</name>
 	<parameters>--name /data/skin_tactile_comp_left_arm --txTime --rxTime</parameters>
         <node>localhost</node>
         <stdio></stdio>
         <tag>yarpdatadumperSkinLeftArmComp</tag>
-    </module>
+    </module-->
     <module>
         <name>yarpdatadumper</name>
 	<parameters>--name /data/skin_tactile_comp_right_hand --txTime --rxTime</parameters>
@@ -47,20 +47,20 @@
         <stdio></stdio>
         <tag>yarpdatadumperSkinRightForearmComp</tag>
     </module>
-    <module>
+    <!--module>
         <name>yarpdatadumper</name>
 	<parameters>--name /data/skin_tactile_comp_right_arm --txTime --rxTime</parameters>
         <node>localhost</node>
         <stdio></stdio>
         <tag>yarpdatadumperSkinRightArmComp</tag>
-    </module>
-    <module>
+    </module-->
+    <!--module>
         <name>yarpdatadumper</name>
 	<parameters>--name /data/skin_tactile_comp_torso --txTime --rxTime</parameters>
         <node>localhost</node>
         <stdio></stdio>
         <tag>yarpdatadumperSkinTorsoComp</tag>
-    </module>
+    </module-->
      
     <module>
         <name>yarpdatadumper</name>
@@ -90,87 +90,30 @@
         <stdio></stdio>
         <tag>yarpdatadumperRightArmJoints</tag>
     </module>
-    <module>
+    <!--module>
         <name>yarpdatadumper</name>
         <parameters>--name /data/joints_leftLeg --txTime --rxTime</parameters>
         <node>localhost</node>
         <stdio></stdio>
         <tag>yarpdatadumperLeftLegJoints</tag>
-    </module>
-    <module>
+    </module-->
+    <!--module>
         <name>yarpdatadumper</name>
         <parameters>--name /data/joints_rightLeg --txTime --rxTime</parameters>
         <node>localhost</node>
         <stdio></stdio>
         <tag>yarpdatadumperRightLegJoints</tag>
-    </module>
+    </module-->
     
-    <module>
+    <!--module>
         <name>yarpdatadumper</name>
         <parameters>--name /data/inertial --txTime --rxTime</parameters>
         <node>localhost</node>
         <stdio></stdio>
         <tag>yarpdatadumperInertial</tag>
-    </module>
+    </module-->
     
-    <module>
-        <name>yarpdatadumper</name>
-        <parameters>--name /data/images/left --type image --txTime --rxTime</parameters>
-        <node>localhost</node>
-        <stdio></stdio>
-        <tag>yarpdatadumperLeftEye</tag>
-    </module>
-    <module>
-        <name>yarpdatadumper</name>
-        <parameters>--name /data/images/right --type image --txTime --rxTime</parameters>
-        <node>localhost</node>
-        <stdio></stdio>
-        <tag>yarpdatadumperRightEye</tag>
-    </module>
-
-    <module>
-        <name>yarpdatadumper</name>
-	<parameters>--name /data/forces_leftArm --txTime --rxTime</parameters>
-        <node>localhost</node>
-        <stdio></stdio>
-        <tag>yarpdatadumperLeftArmForces</tag>
-    </module>
-    <module>
-        <name>yarpdatadumper</name>
-	<parameters>--name /data/forces_rightArm --txTime --rxTime</parameters>
-        <node>localhost</node>
-        <stdio></stdio>
-        <tag>yarpdatadumperRightArmForces</tag>
-    </module>
-    <module>
-        <name>yarpdatadumper</name>
-	<parameters>--name /data/forces_leftLeg --txTime --rxTime</parameters>
-        <node>localhost</node>
-        <stdio></stdio>
-        <tag>yarpdatadumperLeftLegForces</tag>
-    </module>
-    <module>
-        <name>yarpdatadumper</name>
-	<parameters>--name /data/forces_rightLeg --txTime --rxTime</parameters>
-        <node>localhost</node>
-        <stdio></stdio>
-        <tag>yarpdatadumperRightLegForces</tag>
-    </module>
-    <module>
-        <name>yarpdatadumper</name>
-	<parameters>--name /data/forces_leftFoot --txTime --rxTime</parameters>
-        <node>localhost</node>
-        <stdio></stdio>
-        <tag>yarpdatadumperLeftFootForces</tag>
-    </module>
-    <module>
-        <name>yarpdatadumper</name>
-	<parameters>--name /data/forces_rightFoot --txTime --rxTime</parameters>
-        <node>localhost</node>
-        <stdio></stdio>
-        <tag>yarpdatadumperRightFootForces</tag>
-    </module>
-
+    
     <connection>
         <from>/skinManager/skin_events:o</from>
 	    <to>/data/skin_events</to>
@@ -186,11 +129,11 @@
 	    <to>/data/skin_tactile_comp_left_forearm</to>
         <protocol>udp</protocol>
     </connection>
-    <connection>
+    <!--connection>
         <from>/icubSim/skin/left_arm_comp</from>
 	    <to>/data/skin_tactile_comp_left_arm</to>
         <protocol>udp</protocol>
-    </connection>
+    </connection-->
     <connection>
         <from>/icubSim/skin/right_hand_comp</from>
 	    <to>/data/skin_tactile_comp_right_hand</to>
@@ -201,16 +144,16 @@
 	    <to>/data/skin_tactile_comp_right_forearm</to>
         <protocol>udp</protocol>
     </connection>
-    <connection>
+    <!--connection>
         <from>/icubSim/skin/right_arm_comp</from>
 	    <to>/data/skin_tactile_comp_right_arm</to>
         <protocol>udp</protocol>
-    </connection>
-    <connection>
+    </connection-->
+    <!--connection>
         <from>/icubSim/skin/torso_comp</from>
 	    <to>/data/skin_tactile_comp_torso</to>
         <protocol>udp</protocol>
-    </connection>          
+    </connection-->          
      
     <connection>
         <from>/icubSim/head/state:o</from>
@@ -232,7 +175,7 @@
         <to>/data/joints_rightArm</to>
         <protocol>udp</protocol>
     </connection>
-    <connection>
+    <!--connection>
         <from>/icubSim/left_leg/state:o</from>
         <to>/data/joints_leftLeg</to>
         <protocol>udp</protocol>
@@ -241,54 +184,13 @@
         <from>/icubSim/right_leg/state:o</from>
         <to>/data/joints_rightLeg</to>
         <protocol>udp</protocol>
-    </connection>
+    </connection-->
 
-    <connection>
+    <!--connection>
         <from>/icubSim/inertial</from>
         <to>/data/inertial</to>
         <protocol>udp</protocol>
-    </connection>
+    </connection-->
     
-    <connection>
-        <from>/icubSim/camcalib/left/out</from>
-        <to>/data/images/left</to>
-        <protocol>udp</protocol>
-    </connection>
-    <connection>
-        <from>/icubSim/camcalib/right/out</from>
-        <to>/data/images/right</to>
-        <protocol>udp</protocol>
-    </connection>
-    
-    <connection>
-        <from>/icubSim/left_arm/analog:o</from>
-	    <to>/data/forces_leftArm</to>
-        <protocol>udp</protocol>
-    </connection>
-    <connection>
-        <from>/icubSim/right_arm/analog:o</from>
-	    <to>/data/forces_rightArm</to>
-        <protocol>udp</protocol>
-    </connection>
-    <connection>
-        <from>/icubSim/left_leg/analog:o</from>
-	    <to>/data/forces_leftLeg</to>
-        <protocol>udp</protocol>
-    </connection>
-    <connection>
-        <from>/icubSim/right_leg/analog:o</from>
-	    <to>/data/forces_rightLeg</to>
-        <protocol>udp</protocol>
-    </connection>
-    <connection>
-        <from>/icubSim/left_foot/analog:o</from>
-	    <to>/data/forces_leftFoot</to>
-        <protocol>udp</protocol>
-    </connection>
-    <connection>
-        <from>/icubSim/right_foot/analog:o</from>
-	    <to>/data/forces_rightFoot</to>
-        <protocol>udp</protocol>
-    </connection>
-    
+ 
 </application>
