@@ -90,20 +90,20 @@
         <stdio></stdio>
         <tag>yarpdatadumperRightArmJoints</tag>
     </module>
-    <!--module>
+    <module>
         <name>yarpdatadumper</name>
         <parameters>--name /data/joints_leftLeg --txTime --rxTime</parameters>
         <node>localhost</node>
         <stdio></stdio>
         <tag>yarpdatadumperLeftLegJoints</tag>
-    </module-->
-    <!--module>
+    </module>
+    <module>
         <name>yarpdatadumper</name>
         <parameters>--name /data/joints_rightLeg --txTime --rxTime</parameters>
         <node>localhost</node>
         <stdio></stdio>
         <tag>yarpdatadumperRightLegJoints</tag>
-    </module-->
+    </module>
     
     <!--module>
         <name>yarpdatadumper</name>
@@ -115,7 +115,7 @@
     
     
     <connection>
-        <from>/skinManager/skin_events:o</from>
+        <from>/icubSim/skinManager/skin_events:o</from>
 	    <to>/data/skin_events</to>
         <protocol>udp</protocol>
     </connection>
@@ -175,7 +175,7 @@
         <to>/data/joints_rightArm</to>
         <protocol>udp</protocol>
     </connection>
-    <!--connection>
+    <connection>
         <from>/icubSim/left_leg/state:o</from>
         <to>/data/joints_leftLeg</to>
         <protocol>udp</protocol>
@@ -184,7 +184,7 @@
         <from>/icubSim/right_leg/state:o</from>
         <to>/data/joints_rightLeg</to>
         <protocol>udp</protocol>
-    </connection-->
+    </connection>
 
     <!--connection>
         <from>/icubSim/inertial</from>
