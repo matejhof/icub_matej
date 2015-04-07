@@ -21,13 +21,15 @@
 % Changing dir names of input - the dumpers were modified such
 % that the dir structure is shallow to suite the dataSetPlayer. 
 
+% April 2015 - subset for Palo Kovac project - joints and skin events
+
 
 clear;
 clc;
 
 TWO_TIME_STAMPS = true; % USER EDIT
 % the new data dumper with txTime and rxTime 
-SAVE_FIGURES = true; % USER EDIT
+SAVE_FIGURES = false; % USER EDIT
 
 TIME_FROM_ZERO_1_COLUMN = 1;
 TIME_FROM_ZERO_DELTA_1_COLUMN = 2;
@@ -42,16 +44,14 @@ TIME_ABS_2_COLUMN = 7;
 CHOSEN_TIME_COLUMN = TIME_FROM_ZERO_2_COLUMN; % user can choose - 2 is receiver
 CHOSEN_TIME_DELTA_COLUMN = TIME_FROM_ZERO_DELTA_2_COLUMN;
 
-LEGS_ON = false; % if leg data is absent  
+LEGS_ON = false; % if leg data is absent or we don't need it
 % skin output ports - with mask for admissible taxels
 FOREARM_MASK = true;
 PALM_MASK = true;
 
 %% load data
-%PATH = '../app/scripts/data_archive/real/20131105_doubleTouchLogAllTest/data/';
-%PATH = '/mnt/bigdata/icub/matej/skin_stimulations/right_palm/stimulation_by_experimenter_with_fingertip/data/';
-%PATH = '/mnt/bigdata/icub/matej/skin_stimulations/right_forearm/stimulation_by_experimenter_thumb/data/'; % USER EDIT
-PATH = '/media/MyPassport/double_touch_matej_stephane_VVV14/data_rightFingersJ6Moving_to_LeftForearmJ4Moving/data/';
+
+PATH = './test_data/'; % USER EDIT
 
 joints.head = load([PATH 'joints_head/data.log']);
 joints.left_arm = load([PATH 'joints_leftArm/data.log']);
@@ -61,9 +61,9 @@ if LEGS_ON
     joints.left_leg = load([PATH 'joints_leftLeg/data.log']);    
     joints.right_leg = load([PATH 'joints_rightLeg/data.log']);
 end
-inertial = load([PATH 'inertial/data.log']);
-images.left = load([PATH 'images/left/data.log']);
-images.right = load([PATH 'images/right/data.log']);
+%inertial = load([PATH 'inertial/data.log']);
+%images.left = load([PATH 'images/left/data.log']);
+%images.right = load([PATH 'images/right/data.log']);
 %skin.contactList = load([PATH 'skin/skin_events/data.log']);
 fid = fopen([PATH 'skin_events/data.log']);
 if (TWO_TIME_STAMPS==true)
@@ -74,52 +74,45 @@ else
     skin.contactListTimes = [twocols{1} twocols{2}];
 end
 fclose(fid);
-skin.taxels_left_arm = load([PATH 'skin_tactile_comp_left_arm/data.log']);
+%skin.taxels_left_arm = load([PATH 'skin_tactile_comp_left_arm/data.log']);
 skin.taxels_left_forearm = load([PATH 'skin_tactile_comp_left_forearm/data.log']);
 skin.taxels_left_hand = load([PATH 'skin_tactile_comp_left_hand/data.log']);
-skin.taxels_right_arm = load([PATH 'skin_tactile_comp_right_arm/data.log']);
+%skin.taxels_right_arm = load([PATH 'skin_tactile_comp_right_arm/data.log']);
 skin.taxels_right_forearm = load([PATH 'skin_tactile_comp_right_forearm/data.log']);
 skin.taxels_right_hand = load([PATH 'skin_tactile_comp_right_hand/data.log']);
-skin.taxels_torso = load([PATH 'skin_tactile_comp_torso/data.log']);
-forces_and_torques.left_arm = load([PATH 'forces_leftArm/data.log']);
-forces_and_torques.right_arm = load([PATH 'forces_rightArm/data.log']);
-if LEGS_ON
-    forces_and_torques.left_leg = load([PATH 'forces_leftLeg/data.log']);
-    forces_and_torques.left_foot = load([PATH 'forces_leftFoot/data.log']);
-    forces_and_torques.right_leg = load([PATH 'forces_rightLeg/data.log']);
-    forces_and_torques.right_foot = load([PATH 'forces_rightFoot/data.log']);
-end
+%skin.taxels_torso = load([PATH 'skin_tactile_comp_torso/data.log']);
+
 
 if FOREARM_MASK
-   forearmMask = importSkinMaskForearm('skin_masks/forearm_mask.csv', 1, 1); 
+   forearmMask = importSkinMaskForearm('../../skin/skin_masks/forearm_mask.csv', 1, 1); 
 end
 if PALM_MASK
-   palmMask = importSkinMaskPalm('skin_masks/palm_mask.csv', 1, 1); 
+   palmMask = importSkinMaskPalm('../../skin/skin_masks/palm_mask.csv', 1, 1); 
 end
 
 %% print info
 disp('Number of data points (rows) in individual files:');
-disp(['Head joints:',num2str(size(joints.head,1))]);
+%disp(['Head joints:',num2str(size(joints.head,1))]);
 disp(['Left arm joints:',num2str(size(joints.left_arm,1))]);
 disp(['Right arm joints:',num2str(size(joints.right_arm,1))]);
-disp(['Torso joints:',num2str(size(joints.torso,1))]);
+%disp(['Torso joints:',num2str(size(joints.torso,1))]);
 if LEGS_ON
     disp(['Left leg joints:',num2str(size(joints.left_leg,1))]);
     disp(['Right leg joints:',num2str(size(joints.right_leg,1))]);
 end
-disp(['Inertial:',num2str(size(inertial,1))]);
-disp(['Left cam images:',num2str(size(images.left,1))]);
-disp(['Right cam images:',num2str(size(images.right,1))]);
+%disp(['Inertial:',num2str(size(inertial,1))]);
+%disp(['Left cam images:',num2str(size(images.left,1))]);
+%disp(['Right cam images:',num2str(size(images.right,1))]);
 disp(['Skin Contact List readings:',num2str(size(skin.contactListTimes,1))]);
-disp(['Skin taxels left arm readings:',num2str(size(skin.taxels_left_arm,1))]);
+%disp(['Skin taxels left arm readings:',num2str(size(skin.taxels_left_arm,1))]);
 disp(['Skin taxels left forearm readings:',num2str(size(skin.taxels_left_forearm,1))]);
 disp(['Skin taxels left hand readings:',num2str(size(skin.taxels_left_hand,1))]);
-disp(['Skin taxels right arm readings:',num2str(size(skin.taxels_right_arm,1))]);
+%disp(['Skin taxels right arm readings:',num2str(size(skin.taxels_right_arm,1))]);
 disp(['Skin taxels right forearm readings:',num2str(size(skin.taxels_right_forearm,1))]);
 disp(['Skin taxels right hand readings:',num2str(size(skin.taxels_right_hand,1))]);
-disp(['Skin taxels torso readings:',num2str(size(skin.taxels_torso,1))]);
-disp(['Left arm forces:',num2str(size(forces_and_torques.left_arm,1))]);
-disp(['Right arm forces:',num2str(size(forces_and_torques.right_arm,1))]);
+%disp(['Skin taxels torso readings:',num2str(size(skin.taxels_torso,1))]);
+%disp(['Left arm forces:',num2str(size(forces_and_torques.left_arm,1))]);
+%disp(['Right arm forces:',num2str(size(forces_and_torques.right_arm,1))]);
 if LEGS_ON
     disp(['Left leg forces:',num2str(size(forces_and_torques.left_leg,1))]);
     disp(['Left foot forces:',num2str(size(forces_and_torques.left_foot,1))]);
@@ -158,55 +151,7 @@ end
     joints.(FIELDNAMES{iField}) = dat_new;  
  
   end
-  
-  inertial_orig = inertial;  
-  nr_rows_inertial = size(inertial_orig,1);
-  four_nan_columns = NaN(nr_rows_inertial,4);
-  inertial_new = [four_nan_columns inertial_orig];
-  inertial_new(1,1)=0; inertial_new(1,2)=0;inertial_new(1,3)=0; inertial_new(1,4)=0;
-  for i=2:nr_rows_inertial
-        inertial_new(i,1)=inertial_orig(i,2)-inertial_orig(1,2);
-        inertial_new(i,2)=inertial_new(i,1)-inertial_new(i-1,1); % increment - to see if it is stable
-        if (~TWO_TIME_STAMPS) % simply copy them
-            inertial_new(i,3)=inertial_new(i,1);
-            inertial_new(i,4)=inertial_new(i,2);
-        else
-            inertial_new(i,3)=inertial_orig(i,3)-inertial_orig(1,3);
-            inertial_new(i,4)=inertial_new(i,3)-inertial_new(i-1,3); % increment - to see if it is stable
-        end
-  end
-  if (~TWO_TIME_STAMPS)
-       inertial_new = [inertial_new(:,1:6) inertial_new(:,6) inertial_new(:,7:end)]; % we copy the original abs. time column,
-       %such that it has same format like the two time stamp version
-    end
-  inertial = inertial_new;  
-  
-  FIELDNAMES2 = fieldnames(images);
-  for iField = 1:length(FIELDNAMES2)
-    dat_orig = [];  % in the orig data, second column is the absolute linux time;
-    dat_new = []; % with extra first column with the time in seconds from start and second column with time increments between data points
-    dat_orig = images.(FIELDNAMES2{iField});  
-    nr_rows_dat = size(dat_orig,1);
-    four_nan_columns = NaN(nr_rows_dat,4);
-    dat_new = [four_nan_columns dat_orig];
-    dat_new(1,1)=0; dat_new(1,2)=0;dat_new(1,3)=0; dat_new(1,4)=0;
-    for i=2:nr_rows_dat
-        dat_new(i,1)=dat_orig(i,2)-dat_orig(1,2);
-        dat_new(i,2)=dat_new(i,1)-dat_new(i-1,1); % increment - to see if it is stable
-        if (~TWO_TIME_STAMPS) % simply copy them
-            dat_new(i,3)=dat_new(i,1);
-            dat_new(i,4)=dat_new(i,2);
-        else
-            dat_new(i,3)=dat_orig(i,3)-dat_orig(1,3);
-            dat_new(i,4)=dat_new(i,3)-dat_new(i-1,3); % increment - to see if it is stable
-        end
-    end
-    if (~TWO_TIME_STAMPS)
-       dat_new = [dat_new(:,1:6) dat_new(:,6) dat_new(:,7:end)]; % we copy the original abs. time column,
-       %such that it has same format like the two time stamp version
-    end
-    images.(FIELDNAMES2{iField}) = dat_new;  
-  end
+   
  
   FIELDNAMES3 = fieldnames(skin);
   for iField = 1:length(FIELDNAMES3)
@@ -240,34 +185,7 @@ end
     skin.(FIELDNAMES3{iField}) = dat_new;  
  
   end
-  
-  FIELDNAMES4 = fieldnames(forces_and_torques);
-  for iField = 1:length(FIELDNAMES4)
-    dat_orig = [];  % in the orig data, second column is the absolute linux time;
-    dat_new = []; % with extra first column with the time in seconds from start and second column with time increments between data points
-    dat_orig = forces_and_torques.(FIELDNAMES4{iField});  
-    nr_rows_dat = size(dat_orig,1);
-    four_nan_columns = NaN(nr_rows_dat,4);
-    dat_new = [four_nan_columns dat_orig];
-    dat_new(1,1)=0; dat_new(1,2)=0;dat_new(1,3)=0; dat_new(1,4)=0;
-    for i=2:nr_rows_dat
-        dat_new(i,1)=dat_orig(i,2)-dat_orig(1,2);
-        dat_new(i,2)=dat_new(i,1)-dat_new(i-1,1); % increment - to see if it is stable
-        if (~TWO_TIME_STAMPS) % simply copy them
-            dat_new(i,3)=dat_new(i,1);
-            dat_new(i,4)=dat_new(i,2);
-        else
-            dat_new(i,3)=dat_orig(i,3)-dat_orig(1,3);
-            dat_new(i,4)=dat_new(i,3)-dat_new(i-1,3); % increment - to see if it is stable
-        end
-    end
-    if (~TWO_TIME_STAMPS)
-       dat_new = [dat_new(:,1:6) dat_new(:,6) dat_new(:,7:end)]; % we copy the original abs. time column,
-       %such that it has same format like the two time stamp version
-    end
-    forces_and_torques.(FIELDNAMES4{iField}) = dat_new;  
  
-  end
   
   %% plot time diagnostics
   
@@ -279,37 +197,31 @@ end
          f20 = figure(20); clf;
          set(f20,'Name','Absolute time');
          
-         subplot(3,2,1);
+         subplot(2,2,1);
              hold on;
-             plot(joints.head(:,TIME_ABS_1_COLUMN),'b+');
-             plot(joints.head(:,TIME_ABS_2_COLUMN),'k+');
+             plot(joints.left_arm(:,TIME_ABS_1_COLUMN),'b+');
+             plot(joints.left_arm(:,TIME_ABS_2_COLUMN),'k+');
              hold off;
-             legend('joints (sender)','joints (receiver)');
+             legend('joints left arm (sender)','joints left arm(receiver)');
              ylabel('Time (s)');
 
-         subplot(3,2,2);
+         subplot(2,2,2);
              hold on;
-             plot(inertial(:,TIME_ABS_1_COLUMN),'bo');
-             plot(inertial(:,TIME_ABS_2_COLUMN),'ko');
+             plot(joints.right_arm(:,TIME_ABS_1_COLUMN),'b+');
+             plot(joints.right_arm(:,TIME_ABS_2_COLUMN),'k+');
              hold off;
-             legend('inertial (sender)','inertial (receiver)');
-             
-         subplot(3,2,3);
-            hold on;
-            plot(forces_and_torques.right_arm(:,TIME_ABS_1_COLUMN),'b*');
-            plot(forces_and_torques.right_arm(:,TIME_ABS_2_COLUMN),'k*');
-            hold off;
-            legend('force/torque (sender)', 'force/torque (receiver)');
+             legend('joints right arm (sender)','joints right arm (receiver)');
              ylabel('Time (s)');
+
              
-         subplot(3,2,4);
+         subplot(2,2,3);
             hold on;
             plot(skin.contactListTimes(:,TIME_ABS_1_COLUMN),'b^');
             plot(skin.contactListTimes(:,TIME_ABS_2_COLUMN),'k^');
             hold off;
             legend('skin events (sender)','skin events (receiver)');
             
-         subplot(3,2,5);
+         subplot(2,2,4);
             hold on;
             plot(skin.taxels_right_hand(:,TIME_ABS_1_COLUMN),'bv');
             plot(skin.taxels_right_hand(:,TIME_ABS_2_COLUMN),'kv');
@@ -317,48 +229,36 @@ end
             legend('skin comp (sender)','skin comp (receiver)');
             ylabel('Time (s)')
           
-         subplot(3,2,6); 
-            hold on;
-            plot(images.right(:,TIME_ABS_1_COLUMN),'bs');
-            plot(images.right(:,TIME_ABS_2_COLUMN),'ks');
-            hold off;
-            legend('images (sender)', 'images (receiver)');
+        
                     
             
          f21 = figure(21); clf;
          set(f21,'Name','Time starting from 0');
          
-         subplot(3,2,1);
+         subplot(2,2,1);
              hold on;
-             plot(joints.head(:,TIME_FROM_ZERO_1_COLUMN),'b+');
-             plot(joints.head(:,TIME_FROM_ZERO_2_COLUMN),'k+');
+             plot(joints.left_arm(:,TIME_FROM_ZERO_1_COLUMN),'b+');
+             plot(joints.left_arm(:,TIME_FROM_ZERO_2_COLUMN),'k+');
              hold off;
-             legend('joints (sender)','joints (receiver)');
+             legend('joints left arm (sender)','joints left arm (receiver)');
              ylabel('Time (s)');
 
-         subplot(3,2,2);
+         subplot(2,2,2);
              hold on;
-             plot(inertial(:,TIME_FROM_ZERO_1_COLUMN),'bo');
-             plot(inertial(:,TIME_FROM_ZERO_2_COLUMN),'ko');
+             plot(joints.right_arm(:,TIME_FROM_ZERO_1_COLUMN),'b+');
+             plot(joints.right_arm(:,TIME_FROM_ZERO_2_COLUMN),'k+');
              hold off;
-             legend('inertial (sender)','inertial (receiver)');
-             
-         subplot(3,2,3);
-            hold on;
-            plot(forces_and_torques.right_arm(:,TIME_FROM_ZERO_1_COLUMN),'b*');
-            plot(forces_and_torques.right_arm(:,TIME_FROM_ZERO_2_COLUMN),'k*');
-            hold off;
-            legend('force/torque (sender)', 'force/torque (receiver)');
+             legend('joints right arm (sender)','joints right arm (receiver)');
              ylabel('Time (s)');
              
-         subplot(3,2,4);
+         subplot(2,2,3);
             hold on;
             plot(skin.contactListTimes(:,TIME_FROM_ZERO_1_COLUMN),'b^');
             plot(skin.contactListTimes(:,TIME_FROM_ZERO_2_COLUMN),'k^');
             hold off;
             legend('skin events (sender)','skin events (receiver)');
             
-         subplot(3,2,5);
+         subplot(2,2,4);
             hold on;
             plot(skin.taxels_right_hand(:,TIME_FROM_ZERO_1_COLUMN),'bv');
             plot(skin.taxels_right_hand(:,TIME_FROM_ZERO_2_COLUMN),'kv');
@@ -366,50 +266,36 @@ end
             legend('skin comp (sender)','skin comp (receiver)');
             ylabel('Time (s)')
           
-         subplot(3,2,6); 
-            hold on;
-            plot(images.right(:,TIME_FROM_ZERO_1_COLUMN),'bs');
-            plot(images.right(:,TIME_FROM_ZERO_2_COLUMN),'ks');
-            hold off;
-            legend('images (sender)', 'images (receiver)');
-           
-                             
   end
   
   f22 = figure(22); clf;
   set(f22,'Name','Time increments');
          
-         subplot(3,2,1);
-             title(' head joints');
+         subplot(2,2,1);
+             title('left arm joints');
              hold on;
-             plot(joints.head(2:end,TIME_FROM_ZERO_DELTA_1_COLUMN),'b+');
+             plot(joints.left_arm(2:end,TIME_FROM_ZERO_DELTA_1_COLUMN),'b+');
              if(TWO_TIME_STAMPS) 
-                plot(joints.head(2:end,TIME_FROM_ZERO_DELTA_2_COLUMN),'k+');
-                legend('joints (sender)','joints (receiver)');
+                plot(joints.left_arm(2:end,TIME_FROM_ZERO_DELTA_2_COLUMN),'k+');
+                legend('joints left arm (sender)','joints left arm(receiver)');
              end
              hold off;
              ylabel('Sampling - delta time (s)');
 
-         subplot(3,2,2);
+       
+          subplot(2,2,2);
+             title('right arm joints');
              hold on;
-             plot(inertial(2:end,TIME_FROM_ZERO_DELTA_1_COLUMN),'bo');
+             plot(joints.right_arm(2:end,TIME_FROM_ZERO_DELTA_1_COLUMN),'b+');
              if(TWO_TIME_STAMPS) 
-                 plot(inertial(2:end,TIME_FROM_ZERO_DELTA_2_COLUMN),'ko');
-                 legend('inertial (sender)','inertial (receiver)');
+                plot(joints.right_arm(2:end,TIME_FROM_ZERO_DELTA_2_COLUMN),'k+');
+                legend('joints right arm (sender)','joints right arm(receiver)');
              end
              hold off;
-             
-         subplot(3,2,3);
-            hold on;
-            plot(forces_and_torques.right_arm(2:end,TIME_FROM_ZERO_DELTA_1_COLUMN),'b*');
-            if(TWO_TIME_STAMPS) 
-                plot(forces_and_torques.right_arm(2:end,TIME_FROM_ZERO_DELTA_2_COLUMN),'k*');
-                legend('force/torque (sender)', 'force/torque (receiver)');
-            end
-            hold off;
-            ylabel('Sampling - delta time (s)');
-            
-         subplot(3,2,4);
+             ylabel('Sampling - delta time (s)');
+
+       
+         subplot(2,2,3);
             hold on;
             plot(skin.contactListTimes(2:end,TIME_FROM_ZERO_DELTA_1_COLUMN),'b^');
             if(TWO_TIME_STAMPS) 
@@ -418,7 +304,7 @@ end
             end
             hold off;
              
-         subplot(3,2,5);
+         subplot(2,2,4);
             hold on;
             plot(skin.taxels_right_hand(2:end,TIME_FROM_ZERO_DELTA_1_COLUMN),'bv');
             if(TWO_TIME_STAMPS) 
@@ -428,15 +314,7 @@ end
             hold off;
             ylabel('Sampling - delta time (s)');
           
-         subplot(3,2,6); 
-            hold on;
-            plot(images.right(2:end,TIME_FROM_ZERO_DELTA_1_COLUMN),'bs');
-            if(TWO_TIME_STAMPS) 
-                plot(images.right(2:end,TIME_FROM_ZERO_DELTA_2_COLUMN),'ks');
-                legend('images (sender)', 'images (receiver)');
-            end
-            hold off;
-           
+       
                    
   
   %% plot data
@@ -808,135 +686,79 @@ end
             ylabel('Angle roll (deg)');
   end
   
-  f9 = figure(9); clf;
-  set(f9,'Name','Inertial sensors');     
-        
-     subplot(5,3,1);
-      plot(inertial(2:end,CHOSEN_TIME_COLUMN),inertial(2:end,CHOSEN_TIME_DELTA_COLUMN));
-      xlabel('Time (s)');
-      ylabel('Sampling - Delta t (s)');
-    
-     subplot(5,3,4);
-        plot(inertial(:,CHOSEN_TIME_COLUMN),inertial(:,8));
-        xlabel('Time (s)');
-        ylabel('Euler 1  (deg)');
-        
-     subplot(5,3,5);
-        plot(inertial(:,CHOSEN_TIME_COLUMN),inertial(:,9));
-        xlabel('Time (s)');
-        ylabel('Euler 2  (deg)');
-     
-     subplot(5,3,6);
-        plot(inertial(:,CHOSEN_TIME_COLUMN),inertial(:,10));
-        xlabel('Time (s)');
-        ylabel('Euler  3  (deg)');   
-        
-     subplot(5,3,7);
-        plot(inertial(:,CHOSEN_TIME_COLUMN),inertial(:,11));
-        xlabel('Time (s)');
-        ylabel('Lin. acc. 1  (m/s^2)');      
-        
-     subplot(5,3,8);
-        plot(inertial(:,CHOSEN_TIME_COLUMN),inertial(:,12));
-        xlabel('Time (s)');
-        ylabel('Lin. acc. 2  (m/s^2)');        
-        
-     subplot(5,3,9);
-        plot(inertial(:,CHOSEN_TIME_COLUMN),inertial(:,13));
-        xlabel('Time (s)');
-        ylabel('Lin. acc. 3  (m/s^2)');         
-        
-     subplot(5,3,10);
-        plot(inertial(:,CHOSEN_TIME_COLUMN),inertial(:,14));
-        xlabel('Time (s)');
-        ylabel('Ang. vel. 1  (deg/s)');  
-        
-     subplot(5,3,11);
-        plot(inertial(:,CHOSEN_TIME_COLUMN),inertial(:,15));
-        xlabel('Time (s)');
-        ylabel('Ang. vel. 2  (deg/s)');     
-    
-     subplot(5,3,12);
-        plot(inertial(:,CHOSEN_TIME_COLUMN),inertial(:,16));
-        xlabel('Time (s)');
-        ylabel('Ang. vel. 3  (deg/s)');     
-    
-     subplot(5,3,13);
-        plot(inertial(:,CHOSEN_TIME_COLUMN),inertial(:,17));
-        xlabel('Time (s)');
-        ylabel('Magn. 1');  
-   
-      subplot(5,3,14);
-        plot(inertial(:,CHOSEN_TIME_COLUMN),inertial(:,18));
-        xlabel('Time (s)');
-        ylabel('Magn. 2');  
-        
-       subplot(5,3,15);
-        plot(inertial(:,CHOSEN_TIME_COLUMN),inertial(:,19));
-        xlabel('Time (s)');
-        ylabel('Magn. 3');    
+ 
 
-  f10 = figure(10); clf;
-  set(f10,'Name','Images log');     
-        
-    subplot(2,1,1);
-      plot(images.left(2:end,CHOSEN_TIME_COLUMN),images.left(2:end,CHOSEN_TIME_DELTA_COLUMN));
-      xlabel('Time (s)');
-      ylabel('Sampling - Time increments (s)');
-      title('Images left - timing');
-      
-    subplot(2,1,2);
-      plot(images.right(2:end,CHOSEN_TIME_COLUMN),images.right(2:end,CHOSEN_TIME_DELTA_COLUMN));
-      xlabel('Time (s)');
-      ylabel('Sampling - Time increments (s)');
-      title('Images right - timing');
       
   f11 = figure(11); clf;
   set(f11,'Name','Skin sampling');     
         
-    subplot(3,3,1);
+    subplot(3,2,1);
       plot(skin.contactListTimes(2:end,CHOSEN_TIME_COLUMN),skin.contactListTimes(2:end,CHOSEN_TIME_DELTA_COLUMN),'bx');
       xlabel('Time (s)');
       ylabel('Time increments - contactList (s)');
       
-    subplot(3,3,2);
-      plot(skin.taxels_torso(2:end,CHOSEN_TIME_COLUMN),skin.taxels_torso(2:end,CHOSEN_TIME_DELTA_COLUMN),'bx');
-      xlabel('Time (s)');
-      ylabel('Time increments - torso (s)');      
+%     subplot(3,3,2);
+%       plot(skin.taxels_torso(2:end,CHOSEN_TIME_COLUMN),skin.taxels_torso(2:end,CHOSEN_TIME_DELTA_COLUMN),'bx');
+%       xlabel('Time (s)');
+%       ylabel('Time increments - torso (s)');      
       
-     subplot(3,3,4);
-      plot(skin.taxels_left_arm(2:end,CHOSEN_TIME_COLUMN),skin.taxels_left_arm(2:end,CHOSEN_TIME_DELTA_COLUMN),'bx');
-      xlabel('Time (s)');
-      ylabel('Time increments - left arm (s)');   
+%      subplot(3,3,4);
+%       plot(skin.taxels_left_arm(2:end,CHOSEN_TIME_COLUMN),skin.taxels_left_arm(2:end,CHOSEN_TIME_DELTA_COLUMN),'bx');
+%       xlabel('Time (s)');
+%       ylabel('Time increments - left arm (s)');   
       
-     subplot(3,3,5);
+     subplot(3,2,2);
       plot(skin.taxels_left_forearm(2:end,CHOSEN_TIME_COLUMN),skin.taxels_left_forearm(2:end,CHOSEN_TIME_DELTA_COLUMN),'bx');
       xlabel('Time (s)');
       ylabel('Time increments - left fore arm (s)');
       
-      subplot(3,3,6);
+      subplot(3,2,3);
       plot(skin.taxels_left_hand(2:end,CHOSEN_TIME_COLUMN),skin.taxels_left_hand(2:end,CHOSEN_TIME_DELTA_COLUMN),'bx');
       xlabel('Time (s)');
       ylabel('Time increments - left hand (s)');    
       
-      subplot(3,3,7);
-      plot(skin.taxels_right_arm(2:end,CHOSEN_TIME_COLUMN),skin.taxels_right_arm(2:end,CHOSEN_TIME_DELTA_COLUMN),'bx');
-      xlabel('Time (s)');
-      ylabel('Time increments - right arm (s)');   
+%       subplot(3,3,7);
+%       plot(skin.taxels_right_arm(2:end,CHOSEN_TIME_COLUMN),skin.taxels_right_arm(2:end,CHOSEN_TIME_DELTA_COLUMN),'bx');
+%       xlabel('Time (s)');
+%       ylabel('Time increments - right arm (s)');   
       
-      subplot(3,3,8);
+      subplot(3,2,4);
       plot(skin.taxels_right_forearm(2:end,CHOSEN_TIME_COLUMN),skin.taxels_right_forearm(2:end,CHOSEN_TIME_DELTA_COLUMN),'bx');
       xlabel('Time (s)');
       ylabel('Time increments - right fore arm (s)');
       
-      subplot(3,3,9);
+      subplot(3,2,5);
       plot(skin.taxels_right_hand(2:end,CHOSEN_TIME_COLUMN),skin.taxels_right_hand(2:end,CHOSEN_TIME_DELTA_COLUMN),'bx');
       xlabel('Time (s)');
       ylabel('Time increments - right hand (s)');    
       
   
   f111 = figure(111); clf;
-       subplot(2,1,1);
+  set(f11,'Name','Skin activations');     
+  
+       subplot(2,2,1);
+       title('Taxel activations left hand');
+       hold on;
+       [X,Y] = size(skin.taxels_left_hand);
+       taxel_positions = 1:1:(Y-7); 
+       % there are these extra 7 columns with time stamps etc.
+       % note, they are not taxel IDs but positions on the port (-1 to get IDs)
+       for i=1:X
+            plot(taxel_positions,skin.taxels_left_hand(i,8:end),'bx','MarkerSize',8);
+       end
+       if PALM_MASK
+          for j=1:length(PALM_MASK) 
+            if(palmMask(j)==0)
+              plot(j,99,'kx','MarkerSize',10); 
+            end
+          end
+       end
+       xlabel('Taxel index on port');
+       ylabel('Taxel activation');  
+       ylim([0 260]);
+       hold off;
+  
+       subplot(2,2,2);
        title('Taxel activations left forearm');
        hold on;
        [X,Y] = size(skin.taxels_left_forearm);
@@ -955,10 +777,10 @@ end
        end
        xlabel('Taxel index on port');
        ylabel('Taxel activation');  
-       ylim([0 150]);
+       ylim([0 260]);
        hold off;
        
-       subplot(2,1,2);
+       subplot(2,2,3);
        title('Taxel activations right hand');
        hold on;
        [X,Y] = size(skin.taxels_right_hand);
@@ -975,50 +797,33 @@ end
        end
        xlabel('Taxel index on port');
        ylabel('Taxel activation');  
-       ylim([0 150]);
+       ylim([0 260]);
        hold off;
        
+       subplot(2,2,4);
+       title('Taxel activations right forearm');
+       hold on;
+       [X,Y] = size(skin.taxels_right_forearm);
+       taxel_positions = 1:1:(Y-7); 
+       % there are these extra 7 columns with time stamps etc.
+       % note, they are not taxel IDs but positions on the port (-1 to get IDs)
+       for i=1:X
+            plot(taxel_positions,skin.taxels_right_forearm(i,8:end),'bx','MarkerSize',8);
+       end
+       if FOREARM_MASK
+          for j=1:length(forearmMask) 
+            if(forearmMask(j)==0)
+              plot(j,99,'kx','MarkerSize',10); 
+            end
+          end
+       end
+       xlabel('Taxel index on port');
+       ylabel('Taxel activation');  
+       ylim([0 260]);
+       hold off;
+       
+       
   
-      
-  f12 = figure(12); clf;
-  set(f12,'Name','Forces and torques - left arm');
-    subplot(3,3,1);
-        plot(forces_and_torques.left_arm(2:end,CHOSEN_TIME_COLUMN),forces_and_torques.left_arm(2:end,CHOSEN_TIME_DELTA_COLUMN));
-        title('Left arm sampling')
-        xlabel('Time (s)');
-        ylabel('Sampling - Time increments (s)');
-        
-    subplot(3,3,4);
-        plot(forces_and_torques.left_arm(:,CHOSEN_TIME_COLUMN),forces_and_torques.left_arm(:,8));
-        xlabel('Time (s)');
-        ylabel('F x (N)');
-        
-    subplot(3,3,5);
-        plot(forces_and_torques.left_arm(:,CHOSEN_TIME_COLUMN),forces_and_torques.left_arm(:,9));
-        xlabel('Time (s)');
-        ylabel('F y (N)');
-        
-    subplot(3,3,6);
-        plot(forces_and_torques.left_arm(:,CHOSEN_TIME_COLUMN),forces_and_torques.left_arm(:,10));
-        xlabel('Time (s)');
-        ylabel('F z (N)');
-        
-     subplot(3,3,7);
-        plot(forces_and_torques.left_arm(:,CHOSEN_TIME_COLUMN),forces_and_torques.left_arm(:,11));
-        xlabel('Time (s)');
-        ylabel('Tau x (Nm)');
-        
-    subplot(3,3,8);
-        plot(forces_and_torques.left_arm(:,CHOSEN_TIME_COLUMN),forces_and_torques.left_arm(:,12));
-        xlabel('Time (s)');
-        ylabel('Tau y (Nm)');
-        
-    subplot(3,3,9);
-        plot(forces_and_torques.left_arm(:,CHOSEN_TIME_COLUMN),forces_and_torques.left_arm(:,13));
-        xlabel('Time (s)');
-        ylabel('Tau z (Nm)');
-    
-   
  %% SAVING
  if SAVE_FIGURES
      saveas(f20,'output/abs_time.fig');
