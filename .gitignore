@@ -12,6 +12,7 @@
 *.o
 *.obj
 
+
 ## build dirs
 doubleTouchMovementPrimitives/selfTouchPositionControlSequences/build*/
 doubleTouchMovementPrimitives/selfTouchPositionControlSequences2/build*/
@@ -19,6 +20,8 @@ doubleTouchMovementPrimitives/selfTouchRightIndexToLeftForearmPositionControlSeq
 
 #executables
 
+#some picture files
+skin/*/*.jpg
 
 *kdev*
 
