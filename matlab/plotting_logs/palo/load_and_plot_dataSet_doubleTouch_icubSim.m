@@ -41,8 +41,8 @@ TIME_ABS_2_COLUMN = 7;
 
 % USER EDIT - user can choose 
 % in the single time stamp case, they will be both the same
-CHOSEN_TIME_COLUMN = TIME_FROM_ZERO_2_COLUMN; % user can choose - 2 is receiver
-CHOSEN_TIME_DELTA_COLUMN = TIME_FROM_ZERO_DELTA_2_COLUMN;
+CHOSEN_TIME_COLUMN = TIME_FROM_ZERO_1_COLUMN; % user can choose - 1 is sender, 2 is receiver
+CHOSEN_TIME_DELTA_COLUMN = TIME_FROM_ZERO_DELTA_1_COLUMN;
 
 LEGS_ON = false; % if leg data is absent or we don't need it
 % skin output ports - with mask for admissible taxels
