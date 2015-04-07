@@ -21,7 +21,15 @@ doubleTouchMovementPrimitives/selfTouchRightIndexToLeftForearmPositionControlSeq
 #executables
 
 #some picture files
-skin/*/*.jpg
+matlab/skin/left_palm/*.jpg
+matlab/skin/left_palm/*.fig
+matlab/skin/left_palm/*.png
+matlab/skin/left_palm/*.svg
+matlab/skin/right_palm/*.jpg
+matlab/skin/right_palm/*.fig
+matlab/skin/plotSkinParts2D/*.jpg
+matlab/skin/plotSkinParts2D/*.fig
+matlab/skin/plotSkinParts2D/*.eps
 
 *kdev*
 
