@@ -15,8 +15,8 @@ using namespace yarp::sig;
 using namespace yarp::dev;
 using namespace std;
 
-#define USE_LEFT_ARM 1
-#define USE_RIGHT_ARM 0
+#define USE_LEFT_ARM 0
+#define USE_RIGHT_ARM 1
 #define USE_GAZE 1
 #define MANUAL_TARGET 0
 
@@ -78,7 +78,8 @@ int main(int argc, char *argv[])
 	gaze->setSaccadesStatus(false);
 
 	//Define boundaries
-	float minX = -0.2;
+	//Arm in front of face
+    float minX = -0.2;
 	float maxX = -0.35;
 				
 	float minY = -0.1;
