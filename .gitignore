@@ -17,6 +17,7 @@
 doubleTouchMovementPrimitives/selfTouchPositionControlSequences/build*/
 doubleTouchMovementPrimitives/selfTouchPositionControlSequences2/build*/
 doubleTouchMovementPrimitives/selfTouchRightIndexToLeftForearmPositionControlSequence/build*/
+icubBabbling/cartesianSpaceBabbling/build*/
 
 #executables
 
