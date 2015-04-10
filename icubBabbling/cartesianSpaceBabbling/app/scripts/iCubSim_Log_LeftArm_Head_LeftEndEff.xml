@@ -1,0 +1,49 @@
+<application>
+    <name>icubSim_Logging_leftArm_CartesianBabbling</name>
+
+    <dependencies>
+    </dependencies>
+
+    <module>
+        <name>yarpdatadumper</name>
+	<parameters>--name /data/joints_head --txTime --rxTime</parameters>
+        <node>localhost</node>
+        <stdio></stdio>
+        <tag>yarpdatadumperHeadJoints</tag>
+    </module> 
+    <module>
+        <name>yarpdatadumper</name>
+        <parameters>--name /data/joints_leftArm --txTime --rxTime</parameters>
+        <node>localhost</node>
+        <stdio></stdio>
+        <tag>yarpdatadumperLeftArmJoints</tag>
+    </module>
+  
+    <module>
+        <name>yarpdatadumper</name>
+        <parameters>--name /data/cart_leftHand --txTime --rxTime</parameters>
+        <node>localhost</node>
+        <stdio></stdio>
+        <tag>yarpdatadumperLeftHandEndEffector</tag>
+    </module>
+  
+     
+    <connection>
+        <from>/icubSim/head/state:o</from>
+	<to>/data/joints_head</to>
+        <protocol>udp</protocol>
+    </connection>
+    <connection>
+        <from>/icubSim/left_arm/state:o</from>
+        <to>/data/joints_leftArm</to>
+        <protocol>udp</protocol>
+    </connection>
+    <connection>
+        <from>/icubSim/cartesianController/left_arm/state:o</from>
+        <to>/data/cart_leftHand</to>
+        <protocol>udp</protocol>
+    </connection> 	
+  
+    
+    
+</application>
