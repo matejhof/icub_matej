@@ -8,15 +8,29 @@ taxel_pos = left_forearm_taxel_pos_mesh;
 [M,N] = size(taxel_pos);
 
 load left_forearm_upper_patch_7triangleMidpointsPos_iCubV1_CAD.mat;
-triangle_centers_CAD_arbitraryFoR = left_forearm_upper_patch_7triangleMidpointsPos_iCubV1_xmlFoR_m;
-triangle_centers_CAD_wristFoR8 = [];
+triangle_centers_CAD_upperPatch_arbitraryFoR = left_forearm_upper_patch_7triangleMidpointsPos_iCubV1_xmlFoR_m;
+triangle_centers_CAD_upperPatch_wristFoR8 = [];
 
-for j=1:size(triangle_centers_CAD_arbitraryFoR,1)
-   row_vector =  triangle_centers_CAD_arbitraryFoR(j,:);
+load left_forearm_assembly_18coverHolesPos_iCubV1_CAD.mat;
+% note, this CAD data contains also the upper patch - could be used to
+% double check
+triangle_centers_CAD_lowerPatches_assemblyFoR = left_forearm_lower_patch_18coverHoles_iCubV1_xmlFoR_m  ; % this FoR is also kind of arbitrary, but different than in the previous set;
+triangle_centers_CAD_lowerPatches_wristFoR8 = [];
+
+for j=1:size(triangle_centers_CAD_upperPatch_arbitraryFoR,1)
+   row_vector =  triangle_centers_CAD_upperPatch_arbitraryFoR(j,:);
    column_vector = row_vector';
    column_vector_translated = column_vector - toWristFoR8_transl_m;
    column_vector_translatedAndRotated = (toWristFoR8_rotMatrix)' * column_vector_translated;
-   triangle_centers_CAD_wristFoR8(j,:) = column_vector_translatedAndRotated';     
+   triangle_centers_CAD_upperPatch_wristFoR8(j,:) = column_vector_translatedAndRotated';     
+end
+
+for j=1:size(triangle_centers_CAD_lowerPatches_assemblyFoR,1)
+   row_vector =  triangle_centers_CAD_lowerPatches_assemblyFoR(j,:);
+   column_vector = row_vector';
+   column_vector_translated = column_vector - forearmAssemblytoWristFoR8_translVector_m;
+   column_vector_translatedAndRotated = (forearmAssemblytoWristFoR8_rotMatrix)' * column_vector_translated;
+   triangle_centers_CAD_lowerPatches_wristFoR8(j,:) = column_vector_translatedAndRotated';     
 end
 
 %% Plot positions of calibrated taxels - Andrea
@@ -113,10 +127,10 @@ hold off;
 
 f31 = figure(31);
 clf(f31);
-title('Positions of wholes in covers (~ triangle midpoints) from CAD - upper patch (in 1st wrist FoR - FoR_8)');
+title('Positions of holes in covers (~ triangle midpoints) from CAD - upper patch (in 1st wrist FoR - FoR_8)');
 hold on;
 
-triangle_centers_CAD = triangle_centers_CAD_wristFoR8;
+triangle_centers_CAD = triangle_centers_CAD_upperPatch_wristFoR8;
 
        plot3(triangle_centers_CAD(1,1),triangle_centers_CAD(1,2),triangle_centers_CAD(1,3),'xr');
        text(triangle_centers_CAD(1,1),triangle_centers_CAD(1,2),triangle_centers_CAD(1,3),'207'); 
@@ -160,7 +174,7 @@ hold off;
 
 f32 = figure(32);
 clf(f32);
-title('Positions of foreram taxels with their IDs (delPrete with CAD overlayed) - upper patch (in 1st wrist FoR - FoR_8)');
+title('Positions of forearm taxels with their IDs (delPrete with CAD overlayed) - upper patch (in 1st wrist FoR - FoR_8)');
 hold on;
 
 for i=193:M
@@ -174,7 +188,7 @@ for i=193:M
     end
 end
 
-triangle_centers_CAD = triangle_centers_CAD_wristFoR8;
+triangle_centers_CAD = triangle_centers_CAD_upperPatch_wristFoR8;
 
        plot3(triangle_centers_CAD(1,1),triangle_centers_CAD(1,2),triangle_centers_CAD(1,3),'or');
        text(triangle_centers_CAD(1,1),triangle_centers_CAD(1,2),triangle_centers_CAD(1,3),'207','BackgroundColor','red'); 
@@ -216,6 +230,50 @@ set(gca,'ZDir','reverse');
 axis equal;
 hold off;
 
+%% current cell
+f33 = figure(33);
+clf(f33);
+title('Positions of forearm taxels with their IDs (delPrete with CAD overlayed) - lower patch (in 1st wrist FoR - FoR_8)');
+hold on;
+
+for i=1:192
+    if (nnz(taxel_pos(i,:)) > 1) % it's not an all-zero row
+       plot3(taxel_pos(i,1),taxel_pos(i,2),taxel_pos(i,3),'xb');
+       if (mod(i,12) == 4) % should be triangle midpoints
+         text(taxel_pos(i,1),taxel_pos(i,2),taxel_pos(i,3),int2str(i-1),'BackgroundColor','green'); 
+       else
+             text(taxel_pos(i,1),taxel_pos(i,2),taxel_pos(i,3),int2str(i-1)); 
+       end
+    end
+end
+
+triangle_centers_CAD = triangle_centers_CAD_lowerPatches_wristFoR8;
+for i=1:size(triangle_centers_CAD,1)
+       plot3(triangle_centers_CAD(i,1),triangle_centers_CAD(i,2),triangle_centers_CAD(i,3),'or');
+       text(triangle_centers_CAD(i,1),triangle_centers_CAD(i,2),triangle_centers_CAD(i,3),'XX','BackgroundColor','red'); 
+end       
+   
+
+
+ h = quiver3(0 ,0, 0,0.02,0,0);
+ set(h, 'Color', 'r', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on');
+ text(0.01,0,0,'x');
+ h2 = quiver3(0,0,0, 0,0.02,0);
+ set(h2, 'Color', 'g', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on')
+ text(0,0.01,0,'y');
+ h3 = quiver3(0,0,0, 0,0,0.02);
+ set(h3, 'Color', 'b', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on')
+ text(0,0,0.01,'z');
+
+xlabel('Taxel position x (m)');
+set(gca,'XDir','reverse');
+ylabel('Taxel position y (m)');
+zlabel('Taxel position z (m)');
+set(gca,'ZDir','reverse');
+axis equal;
+hold off;
+
+%% another cell
 
 f4 = figure(4);
 clf(f4);
