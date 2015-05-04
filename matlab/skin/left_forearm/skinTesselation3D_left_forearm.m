@@ -379,6 +379,64 @@ for i= 1:7
     
 end
 
+
+m_m = zeros(3, 6);
+
+% merge rects 3 , 4 , 7 into m_m[1]
+
+m_m(1,1) = min_max(7,1); 
+m_m(1,2) = min_max(3,2);
+m_m(1,3) = min_max(3,3);
+m_m(1,4) = min_max(4,4);
+m_m(1,5) = min_max(3,5);
+m_m(1,6) = min_max(4,6);
+
+% merge rects 1, 6 into m_m[2]
+
+m_m(2,1) = min_max(1,1); 
+m_m(2,2) = min_max(1,2);
+m_m(2,3) = min_max(6,3);
+m_m(2,4) = min_max(6,4);
+m_m(2,5) = min_max(1,5);
+m_m(2,6) = min_max(1,6);
+
+% merge rects 2, 5 into m_m[3]
+
+m_m(3,1) = min_max(5,1); 
+m_m(3,2) = min_max(2,2);
+m_m(3,3) = min_max(5,3);
+m_m(3,4) = min_max(2,4);
+m_m(3,5) = min_max(2,5);
+m_m(3,6) = min_max(2,6);
+
+
+
+for i= 1:3
+    %uncoment to see line conecting minimal and maximal point of rectangle 
+    %plot3([min_max(i,1) min_max(i,4)],[min_max(i,2) min_max(i,5)],[min_max(i,3) min_max(i,6)]);
+    
+    plot3([m_m(i,1) m_m(i,4)],[m_m(i,5) m_m(i,5)],[m_m(i,3) m_m(i,3)], 'Color', 'r');
+    plot3([m_m(i,4) m_m(i,4)],[m_m(i,5) m_m(i,5)],[m_m(i,3) m_m(i,6)], 'Color', 'r');
+    plot3([m_m(i,4) m_m(i,1)],[m_m(i,5) m_m(i,5)],[m_m(i,6) m_m(i,6)], 'Color', 'r');
+    plot3([m_m(i,1) m_m(i,1)],[m_m(i,5) m_m(i,5)],[m_m(i,3) m_m(i,6)], 'Color', 'r');
+    
+    plot3([m_m(i,1) m_m(i,4)],[m_m(i,2) m_m(i,2)],[m_m(i,3) m_m(i,3)], 'Color', 'r');
+    plot3([m_m(i,4) m_m(i,4)],[m_m(i,2) m_m(i,2)],[m_m(i,3) m_m(i,6)], 'Color', 'r');
+    plot3([m_m(i,4) m_m(i,1)],[m_m(i,2) m_m(i,2)],[m_m(i,6) m_m(i,6)], 'Color', 'r');
+    plot3([m_m(i,1) m_m(i,1)],[m_m(i,2) m_m(i,2)],[m_m(i,3) m_m(i,6)], 'Color', 'r');
+    
+    plot3([m_m(i,1) m_m(i,1)],[m_m(i,2) m_m(i,5)],[m_m(i,3) m_m(i,3)], 'Color', 'r');
+    plot3([m_m(i,4) m_m(i,4)],[m_m(i,2) m_m(i,5)],[m_m(i,3) m_m(i,3)], 'Color', 'r');
+    plot3([m_m(i,4) m_m(i,4)],[m_m(i,2) m_m(i,5)],[m_m(i,6) m_m(i,6)], 'Color', 'r');
+    plot3([m_m(i,1) m_m(i,1)],[m_m(i,2) m_m(i,5)],[m_m(i,6) m_m(i,6)], 'Color', 'r');
+    
+    
+    
+end
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % end of Martin Varga 2015
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
