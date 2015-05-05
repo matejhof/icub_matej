@@ -410,6 +410,32 @@ m_m(3,5) = min_max(2,5);
 m_m(3,6) = min_max(2,6);
 
 
+%final adjustments
+
+m_m(2,3) = m_m(3,3);
+m_m(2,6) = m_m(3,6);
+
+%z
+m_m(1,3) = m_m(1,3) - 0.005;
+m_m(2,3) = m_m(2,3) - 0.005;
+m_m(3,3) = m_m(3,3) - 0.005;
+
+m_m(1,6) = m_m(1,6) + 0.005;
+m_m(2,6) = m_m(2,6) + 0.005;
+m_m(3,6) = m_m(3,6) + 0.005;
+
+%x
+m_m(1,1) = m_m(1,1) - 0.005;
+m_m(2,1) = m_m(2,1) - 0.005;
+
+m_m(1,4) = m_m(1,4) + 0.005;
+m_m(3,4) = m_m(3,4) + 0.005;
+
+%y
+m_m(1,5) = m_m(1,5) + 0.005;
+
+m_m(2,2) = m_m(2,2) - 0.005;
+m_m(3,2) = m_m(3,2) - 0.005;
 
 for i= 1:3
     %uncoment to see line conecting minimal and maximal point of rectangle 
@@ -437,6 +463,10 @@ end
 
 
 
+   [ vystup, extremes ] = Translation(taxel_pos, 1, 1 + 11, triangle_centers_CAD_lowerPatches_wristFoR8(10,:));
+   
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % end of Martin Varga 2015
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -461,6 +491,8 @@ axis equal;
 hold off;
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Here starts figure 33
 
 f33 = figure(33);
 clf(f33);
@@ -481,7 +513,7 @@ end
 triangle_centers_CAD = triangle_centers_CAD_lowerPatches_wristFoR8;
 for i=1:size(triangle_centers_CAD,1)
        plot3(triangle_centers_CAD(i,1),triangle_centers_CAD(i,2),triangle_centers_CAD(i,3),'or');
-       text(triangle_centers_CAD(i,1),triangle_centers_CAD(i,2),triangle_centers_CAD(i,3),'XX','BackgroundColor','red'); 
+       text(triangle_centers_CAD(i,1),triangle_centers_CAD(i,2),triangle_centers_CAD(i,3), int2str(i) ,'BackgroundColor','red'); 
 end       
    
 
