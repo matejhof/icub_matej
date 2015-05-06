@@ -460,11 +460,93 @@ for i= 1:3
     
 end
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%bottom part
+
+% cs = èervený stred
+
+nin_nax = zeros(16, 6);
+
+%od 1 cs 10
+[ vystup, extremes ] = Translation(taxel_pos, 1, 1 + 11, triangle_centers_CAD_lowerPatches_wristFoR8(10,:));
+translated_coordinates(1:12, 1:3) = vystup;
+nin_nax(1,:) = extremes;
 
 
+%od 13 cs 6
+[ vystup, extremes ] = Translation(taxel_pos, 13, 13 + 11, triangle_centers_CAD_lowerPatches_wristFoR8(6,:));
+translated_coordinates(13:24, 1:3) = vystup;
+nin_nax(2,:) = extremes;
 
-   [ vystup, extremes ] = Translation(taxel_pos, 1, 1 + 11, triangle_centers_CAD_lowerPatches_wristFoR8(10,:));
-   
+%od 25 cs 6
+[ vystup, extremes ] = Translation(taxel_pos, 25, 25 + 11, triangle_centers_CAD_lowerPatches_wristFoR8(4,:));
+translated_coordinates(25:36, 1:3) = vystup;
+nin_nax(3,:) = extremes;
+ 
+%od 37 cs 9
+[ vystup, extremes ] = Translation(taxel_pos, 37, 37 + 11, triangle_centers_CAD_lowerPatches_wristFoR8(9,:));
+translated_coordinates(37:48, 1:3) = vystup;
+nin_nax(4,:) = extremes;
+
+%od 49 cs 13
+[ vystup, extremes ] = Translation(taxel_pos, 49, 49 + 11, triangle_centers_CAD_lowerPatches_wristFoR8(13,:));
+translated_coordinates(49:60, 1:3) = vystup;
+nin_nax(5,:) = extremes;
+
+%od 61 cs 15
+[ vystup, extremes ] = Translation(taxel_pos, 61, 61 + 11, triangle_centers_CAD_lowerPatches_wristFoR8(15,:));
+translated_coordinates(61:72, 1:3) = vystup;
+nin_nax(6,:) = extremes;
+
+%od 73 cs 5
+[ vystup, extremes ] = Translation(taxel_pos, 73, 73 + 11, triangle_centers_CAD_lowerPatches_wristFoR8(5,:));
+translated_coordinates(73:84, 1:3) = vystup;
+nin_nax(7,:) = extremes;
+
+%od 85 cs 1
+[ vystup, extremes ] = Translation(taxel_pos, 85, 85 + 11, triangle_centers_CAD_lowerPatches_wristFoR8(1,:));
+translated_coordinates(85:96, 1:3) = vystup;
+nin_nax(8,:) = extremes;
+
+%od 97 cs 2
+[ vystup, extremes ] = Translation(taxel_pos, 97, 97 + 11, triangle_centers_CAD_lowerPatches_wristFoR8(2,:));
+translated_coordinates(97:108, 1:3) = vystup;
+nin_nax(9,:) = extremes;
+
+%od 109 cs 7
+[ vystup, extremes ] = Translation(taxel_pos, 109, 109 + 11, triangle_centers_CAD_lowerPatches_wristFoR8(7,:));
+translated_coordinates(109:120, 1:3) = vystup;
+nin_nax(10,:) = extremes;
+
+%od 121 cs 11
+[ vystup, extremes ] = Translation(taxel_pos, 121, 121 + 11, triangle_centers_CAD_lowerPatches_wristFoR8(11,:));
+translated_coordinates(121:132, 1:3) = vystup;
+nin_nax(11,:) = extremes;
+
+%od 133 cs 12
+[ vystup, extremes ] = Translation(taxel_pos, 133, 133 + 11, triangle_centers_CAD_lowerPatches_wristFoR8(12,:));
+translated_coordinates(133:144, 1:3) = vystup;
+nin_nax(12,:) = extremes;
+
+%od 145 cs 8
+[ vystup, extremes ] = Translation(taxel_pos, 145, 145 + 11, triangle_centers_CAD_lowerPatches_wristFoR8(8,:));
+translated_coordinates(145:156, 1:3) = vystup;
+nin_nax(13,:) = extremes;
+
+%od 157 cs 3
+[ vystup, extremes ] = Translation(taxel_pos, 157, 157 + 11, triangle_centers_CAD_lowerPatches_wristFoR8(3,:));
+translated_coordinates(157:168, 1:3) = vystup;
+nin_nax(14,:) = extremes;
+
+%od 169 cs 16
+[ vystup, extremes ] = Translation(taxel_pos, 169, 169 + 11, triangle_centers_CAD_lowerPatches_wristFoR8(16,:));
+translated_coordinates(169:180, 1:3) = vystup;
+nin_nax(15,:) = extremes;
+
+%od 181 cs 14
+[ vystup, extremes ] = Translation(taxel_pos, 181, 181 + 11, triangle_centers_CAD_lowerPatches_wristFoR8(14,:));
+translated_coordinates(181:192, 1:3) = vystup;
+nin_nax(16,:) = extremes;
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -498,6 +580,38 @@ f33 = figure(33);
 clf(f33);
 title('Positions of forearm taxels with their IDs (delPrete with CAD overlayed) - lower patch (in 1st wrist FoR - FoR_8)');
 hold on;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Martin Varga
+
+
+% draws "rectangles"
+for i= 1:16
+    %uncoment to see line conecting minimal and maximal point of rectangle 
+    %plot3([min_max(i,1) min_max(i,4)],[min_max(i,2) min_max(i,5)],[min_max(i,3) min_max(i,6)]);
+    
+    plot3([nin_nax(i,1) nin_nax(i,4)],[nin_nax(i,5) nin_nax(i,5)],[nin_nax(i,3) nin_nax(i,3)]);
+    plot3([nin_nax(i,4) nin_nax(i,4)],[nin_nax(i,5) nin_nax(i,5)],[nin_nax(i,3) nin_nax(i,6)]);
+    plot3([nin_nax(i,4) nin_nax(i,1)],[nin_nax(i,5) nin_nax(i,5)],[nin_nax(i,6) nin_nax(i,6)]);
+    plot3([nin_nax(i,1) nin_nax(i,1)],[nin_nax(i,5) nin_nax(i,5)],[nin_nax(i,3) nin_nax(i,6)]);
+    
+    plot3([nin_nax(i,1) nin_nax(i,4)],[nin_nax(i,2) nin_nax(i,2)],[nin_nax(i,3) nin_nax(i,3)]);
+    plot3([nin_nax(i,4) nin_nax(i,4)],[nin_nax(i,2) nin_nax(i,2)],[nin_nax(i,3) nin_nax(i,6)]);
+    plot3([nin_nax(i,4) nin_nax(i,1)],[nin_nax(i,2) nin_nax(i,2)],[nin_nax(i,6) nin_nax(i,6)]);
+    plot3([nin_nax(i,1) nin_nax(i,1)],[nin_nax(i,2) nin_nax(i,2)],[nin_nax(i,3) nin_nax(i,6)]);
+    
+    plot3([nin_nax(i,1) nin_nax(i,1)],[nin_nax(i,2) nin_nax(i,5)],[nin_nax(i,3) nin_nax(i,3)]);
+    plot3([nin_nax(i,4) nin_nax(i,4)],[nin_nax(i,2) nin_nax(i,5)],[nin_nax(i,3) nin_nax(i,3)]);
+    plot3([nin_nax(i,4) nin_nax(i,4)],[nin_nax(i,2) nin_nax(i,5)],[nin_nax(i,6) nin_nax(i,6)]);
+    plot3([nin_nax(i,1) nin_nax(i,1)],[nin_nax(i,2) nin_nax(i,5)],[nin_nax(i,6) nin_nax(i,6)]);
+    
+    
+    
+end
+
+%end of Martin Varga
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 for i=1:192
     if (nnz(taxel_pos(i,:)) > 1) % it's not an all-zero row
