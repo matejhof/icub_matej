@@ -556,7 +556,7 @@ for i=193:M
    
 end
 
-triangle_centers_CAD = triangle_centers_CAD_wristFoR8;
+triangle_centers_CAD = triangle_centers_CAD_upperPatch_wristFoR8;
 
 plot3(triangle_centers_CAD(1,1),triangle_centers_CAD(1,2),triangle_centers_CAD(1,3),'or');
 text(triangle_centers_CAD(1,1),triangle_centers_CAD(1,2),triangle_centers_CAD(1,3),'207','BackgroundColor','red'); 
