@@ -478,7 +478,7 @@ nin_nax(1,:) = extremes;
 translated_coordinates(13:24, 1:3) = vystup;
 nin_nax(2,:) = extremes;
 
-%od 25 cs 6
+%od 25 cs 4
 [ vystup, extremes ] = Translation(taxel_pos, 25, 25 + 11, triangle_centers_CAD_lowerPatches_wristFoR8(4,:));
 translated_coordinates(25:36, 1:3) = vystup;
 nin_nax(3,:) = extremes;
@@ -550,6 +550,72 @@ nin_nax(16,:) = extremes;
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%big cubes bottom part, only one side
+n_n = zeros(8, 6);
+
+%cs 12 a 16 cize od 133 a 169 cize indexy 12 a 15
+n_n(1,:) = merge(nin_nax(12,:), nin_nax(15,:));
+
+%cs 3 a 8 cize od 157 a 145 cize indexy 14 a 13
+n_n(2,:) = merge(nin_nax(14,:), nin_nax(13,:));
+
+%cs 4 a 6 cize od 25 a 13 cize indexy 3 a 2
+n_n(3,:) = merge(nin_nax(3,:), nin_nax(2,:));
+
+%cs 10 a 14 cize od 1 a 118 cize indexy 1 a 16
+n_n(4,:) = merge(nin_nax(1,:), nin_nax(16,:));
+
+
+%big cubes adjust
+
+n_n(3,5) = n_n(4,2);
+n_n(2,5) = n_n(1,2);
+
+a  = mean([n_n(3,5);  n_n(2,5)]);
+n_n(3,5) = a;
+n_n(4,2) = a;
+n_n(2,5) = a;
+n_n(1,2) = a;
+
+a  = mean([n_n(4,6);  n_n(1,3)]);
+n_n(4,6) = a;
+n_n(1,3) = a;
+
+a  = mean([n_n(3,6);  n_n(2,3)]);
+n_n(3,6) = a;
+n_n(2,3) = a;
+
+n_n(3,4) = 0;
+n_n(4,4) = 0;
+n_n(2,4) = 0;
+n_n(1,4) = 0;
+
+n_n(3,1) = n_n(3,1) -0.005;
+n_n(1,1) = n_n(3,1);
+n_n(2,1) = n_n(3,1);
+n_n(4,1) = n_n(3,1);
+
+n_n(3,3) = n_n(3,3) -0.005;
+n_n(4,3) = n_n(4,3) -0.005;
+
+n_n(1,6) = n_n(1,6) +0.005;
+n_n(2,6) = n_n(2,6) +0.005;
+
+n_n(4,5) = n_n(4,5) +0.005;
+n_n(1,5) = n_n(1,5) +0.005;
+
+n_n(3,2) = n_n(3,2) -0.005;
+n_n(2,2) = n_n(2,2) -0.005;
+
+%copy values to the other side
+
+n_n(5:8, :) = n_n(1:4, :);
+
+n_n(5:8, 4) = - n_n(5:8, 1);
+n_n(5:8, 1) = 0;
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % end of Martin Varga 2015
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -587,9 +653,7 @@ hold on;
 
 % draws "rectangles"
 for i= 1:16
-    %uncoment to see line conecting minimal and maximal point of rectangle 
-    %plot3([min_max(i,1) min_max(i,4)],[min_max(i,2) min_max(i,5)],[min_max(i,3) min_max(i,6)]);
-    
+     
     plot3([nin_nax(i,1) nin_nax(i,4)],[nin_nax(i,5) nin_nax(i,5)],[nin_nax(i,3) nin_nax(i,3)]);
     plot3([nin_nax(i,4) nin_nax(i,4)],[nin_nax(i,5) nin_nax(i,5)],[nin_nax(i,3) nin_nax(i,6)]);
     plot3([nin_nax(i,4) nin_nax(i,1)],[nin_nax(i,5) nin_nax(i,5)],[nin_nax(i,6) nin_nax(i,6)]);
@@ -604,10 +668,33 @@ for i= 1:16
     plot3([nin_nax(i,4) nin_nax(i,4)],[nin_nax(i,2) nin_nax(i,5)],[nin_nax(i,3) nin_nax(i,3)]);
     plot3([nin_nax(i,4) nin_nax(i,4)],[nin_nax(i,2) nin_nax(i,5)],[nin_nax(i,6) nin_nax(i,6)]);
     plot3([nin_nax(i,1) nin_nax(i,1)],[nin_nax(i,2) nin_nax(i,5)],[nin_nax(i,6) nin_nax(i,6)]);
-    
-    
-    
+       
 end
+
+
+
+
+% draws big "rectangles"
+for i= 1:8
+      
+    plot3([n_n(i,1) n_n(i,4)],[n_n(i,5) n_n(i,5)],[n_n(i,3) n_n(i,3)], 'Color', 'r');
+    plot3([n_n(i,4) n_n(i,4)],[n_n(i,5) n_n(i,5)],[n_n(i,3) n_n(i,6)], 'Color', 'r');
+    plot3([n_n(i,4) n_n(i,1)],[n_n(i,5) n_n(i,5)],[n_n(i,6) n_n(i,6)], 'Color', 'r');
+    plot3([n_n(i,1) n_n(i,1)],[n_n(i,5) n_n(i,5)],[n_n(i,3) n_n(i,6)], 'Color', 'r');
+    
+    plot3([n_n(i,1) n_n(i,4)],[n_n(i,2) n_n(i,2)],[n_n(i,3) n_n(i,3)], 'Color', 'r');
+    plot3([n_n(i,4) n_n(i,4)],[n_n(i,2) n_n(i,2)],[n_n(i,3) n_n(i,6)], 'Color', 'r');
+    plot3([n_n(i,4) n_n(i,1)],[n_n(i,2) n_n(i,2)],[n_n(i,6) n_n(i,6)], 'Color', 'r');
+    plot3([n_n(i,1) n_n(i,1)],[n_n(i,2) n_n(i,2)],[n_n(i,3) n_n(i,6)], 'Color', 'r');
+    
+    plot3([n_n(i,1) n_n(i,1)],[n_n(i,2) n_n(i,5)],[n_n(i,3) n_n(i,3)], 'Color', 'r');
+    plot3([n_n(i,4) n_n(i,4)],[n_n(i,2) n_n(i,5)],[n_n(i,3) n_n(i,3)], 'Color', 'r');
+    plot3([n_n(i,4) n_n(i,4)],[n_n(i,2) n_n(i,5)],[n_n(i,6) n_n(i,6)], 'Color', 'r');
+    plot3([n_n(i,1) n_n(i,1)],[n_n(i,2) n_n(i,5)],[n_n(i,6) n_n(i,6)], 'Color', 'r');
+     
+end
+
+
 
 %end of Martin Varga
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
