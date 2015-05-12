@@ -567,7 +567,7 @@ n_n(2,:) = merge(nin_nax(14,:), nin_nax(13,:));
 %cs 4 a 6 cize od 25 a 13 cize indexy 3 a 2
 n_n(3,:) = merge(nin_nax(3,:), nin_nax(2,:));
 
-%cs 10 a 14 cize od 1 a 118 cize indexy 1 a 16
+%cs 10 a 14 cize od 1 a 181 cize indexy 1 a 16
 n_n(4,:) = merge(nin_nax(1,:), nin_nax(16,:));
 
 

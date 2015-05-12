@@ -33,6 +33,71 @@ end
  h3 = quiver3(0,0,0, 0,0,0.02);
  set(h3, 'Color', 'b', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on')
  text(0,0,0.01,'z');
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Martin Varga
+
+load m_m.mat;
+load n_n.mat;
+
+
+%change acording to new axes
+for i= 1:3
+    m_m(i,2) = - m_m(i,2);
+    m_m(i,3) = - m_m(i,3);
+    m_m(i,5) = - m_m(i,5);
+    m_m(i,6) = - m_m(i,6);
+end    
+
+for i= 1:8
+    n_n(i,2) = - n_n(i,2);
+    n_n(i,3) = - n_n(i,3);
+    n_n(i,5) = - n_n(i,5);
+    n_n(i,6) = - n_n(i,6);
+end    
+ % draws big "rectangles"
+for i= 1:8
+      
+    plot3([n_n(i,1) n_n(i,4)],[n_n(i,5) n_n(i,5)],[n_n(i,3) n_n(i,3)], 'Color', 'r');
+    plot3([n_n(i,4) n_n(i,4)],[n_n(i,5) n_n(i,5)],[n_n(i,3) n_n(i,6)], 'Color', 'r');
+    plot3([n_n(i,4) n_n(i,1)],[n_n(i,5) n_n(i,5)],[n_n(i,6) n_n(i,6)], 'Color', 'r');
+    plot3([n_n(i,1) n_n(i,1)],[n_n(i,5) n_n(i,5)],[n_n(i,3) n_n(i,6)], 'Color', 'r');
+    
+    plot3([n_n(i,1) n_n(i,4)],[n_n(i,2) n_n(i,2)],[n_n(i,3) n_n(i,3)], 'Color', 'r');
+    plot3([n_n(i,4) n_n(i,4)],[n_n(i,2) n_n(i,2)],[n_n(i,3) n_n(i,6)], 'Color', 'r');
+    plot3([n_n(i,4) n_n(i,1)],[n_n(i,2) n_n(i,2)],[n_n(i,6) n_n(i,6)], 'Color', 'r');
+    plot3([n_n(i,1) n_n(i,1)],[n_n(i,2) n_n(i,2)],[n_n(i,3) n_n(i,6)], 'Color', 'r');
+    
+    plot3([n_n(i,1) n_n(i,1)],[n_n(i,2) n_n(i,5)],[n_n(i,3) n_n(i,3)], 'Color', 'r');
+    plot3([n_n(i,4) n_n(i,4)],[n_n(i,2) n_n(i,5)],[n_n(i,3) n_n(i,3)], 'Color', 'r');
+    plot3([n_n(i,4) n_n(i,4)],[n_n(i,2) n_n(i,5)],[n_n(i,6) n_n(i,6)], 'Color', 'r');
+    plot3([n_n(i,1) n_n(i,1)],[n_n(i,2) n_n(i,5)],[n_n(i,6) n_n(i,6)], 'Color', 'r');
+     
+end
+
+for i= 1:3
+    %uncoment to see line conecting minimal and maximal point of rectangle 
+    %plot3([min_max(i,1) min_max(i,4)],[min_max(i,2) min_max(i,5)],[min_max(i,3) min_max(i,6)]);
+    
+    plot3([m_m(i,1) m_m(i,4)],[m_m(i,5) m_m(i,5)],[m_m(i,3) m_m(i,3)], 'Color', 'g');
+    plot3([m_m(i,4) m_m(i,4)],[m_m(i,5) m_m(i,5)],[m_m(i,3) m_m(i,6)], 'Color', 'g');
+    plot3([m_m(i,4) m_m(i,1)],[m_m(i,5) m_m(i,5)],[m_m(i,6) m_m(i,6)], 'Color', 'g');
+    plot3([m_m(i,1) m_m(i,1)],[m_m(i,5) m_m(i,5)],[m_m(i,3) m_m(i,6)], 'Color', 'g');
+    
+    plot3([m_m(i,1) m_m(i,4)],[m_m(i,2) m_m(i,2)],[m_m(i,3) m_m(i,3)], 'Color', 'g');
+    plot3([m_m(i,4) m_m(i,4)],[m_m(i,2) m_m(i,2)],[m_m(i,3) m_m(i,6)], 'Color', 'g');
+    plot3([m_m(i,4) m_m(i,1)],[m_m(i,2) m_m(i,2)],[m_m(i,6) m_m(i,6)], 'Color', 'g');
+    plot3([m_m(i,1) m_m(i,1)],[m_m(i,2) m_m(i,2)],[m_m(i,3) m_m(i,6)], 'Color', 'g');
+    
+    plot3([m_m(i,1) m_m(i,1)],[m_m(i,2) m_m(i,5)],[m_m(i,3) m_m(i,3)], 'Color', 'g');
+    plot3([m_m(i,4) m_m(i,4)],[m_m(i,2) m_m(i,5)],[m_m(i,3) m_m(i,3)], 'Color', 'g');
+    plot3([m_m(i,4) m_m(i,4)],[m_m(i,2) m_m(i,5)],[m_m(i,6) m_m(i,6)], 'Color', 'g');
+    plot3([m_m(i,1) m_m(i,1)],[m_m(i,2) m_m(i,5)],[m_m(i,6) m_m(i,6)], 'Color', 'g');
+    
+    
+    
+end
+%end Martin VArga
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %ylim([-45 15]);
 %xlim([-30 30]);
