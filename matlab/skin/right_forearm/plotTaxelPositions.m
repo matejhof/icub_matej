@@ -118,20 +118,5 @@ hold off;
 if SAVE_FIGURES
     saveas(f1,'Taxel_positions_left_forearm.fig');
     print -f1 -djpeg 'Taxel_positions_left_forearm.jpg';
-    saveas(f2,'Taxel_positions_left_forearm_lowerBigPatch.fig');
-    print -f2 -djpeg 'Taxel_positions_left_forearm_lowerBigPatch.jpg';
-    saveas(f3,'Taxel_positions_left_forearm_upperSmallPatch.fig');
-    print -f3 -djpeg 'Taxel_positions_left_forearm_upperSmallPatch.jpg';
-    saveas(f31,'TriangleCenters_left_forearm_upperSmallPatch_CAD.fig');
-    print -f31 -djpeg 'TriangleCenters_left_forearm_upperSmallPatch_CAD.jpg';
-    saveas(f32,'Taxel_positions_left_forearm_upperSmallPatch_delPreteAndCAD.fig');
-    print -f32 -djpeg 'Taxel_positions_left_forearm_upperSmallPatch_delPreteAndCAD.jpg';
-    saveas(f4,'Taxel_positions_left_forearm_upperSmallPatch_allPlusFirstThreeTrianglesIndividually.fig');
-    print -f4 -djpeg 'Taxel_positions_left_forearm_upperSmallPatch_allPlusFirstThreeTrianglesIndividually.jpg';
-    saveas(f4,'Taxel_positions_left_forearm_upperSmallPatch_lastFourTrianglesIndividually.fig');
-    print -f4 -djpeg 'Taxel_positions_left_forearm_upperSmallPatch_lastFourTrianglesIndividually.jpg';
-    saveas(f6,'Taxel_positions_left_forearm_upperSmallPatch_OneTriangularModuleOverlayed.fig');
-    print -f6 -djpeg 'Taxel_positions_left_forearm_upperSmallPatch_OneTriangularModuleOverlayed.jpg';
-    saveas(f61,'Taxel_positions_left_forearm_lowerBigPatch_OneTriangularModuleOverlayed.fig');
-    print -f61 -djpeg 'Taxel_positions_left_forearm_lowerBigPatch_OneTriangularModuleOverlayed.jpg';
+   
 end
