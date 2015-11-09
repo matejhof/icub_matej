@@ -1,6 +1,6 @@
     case SKIN_LEFT_FOREARM:
              //upper small patch (7 triangles)
-             if((geo_center_link_FoR[0]>-0.0326) && (geo_center_link_FoR[0]<0.0326) && (geo_center_link_FoR[1]>-0.0328) && (geo_center_link_FoR[1]<0.0039) && (geo_center_link_FoR[2]>-0.0338) && (geo_center_link_FoR[2]<0)){
+             if((geo_center_link_FoR[0]>-0.0326) && (geo_center_link_FoR[0]<0.0326) && (geo_center_link_FoR[1]>-0.0528) && (geo_center_link_FoR[1]<0.0039) && (geo_center_link_FoR[2]>-0.0338) && (geo_center_link_FoR[2]<0)){
                 //triangle taxel IDs 288-299
                 pushTriangleToTaxelList(288,list_of_taxels);
                 //triangle 300-311
@@ -8,13 +8,13 @@
                 //triangle 348-359 
                 pushTriangleToTaxelList(348,list_of_taxels);
              }
-             else if((geo_center_link_FoR[0]>-0.0345) && (geo_center_link_FoR[0]<0) && (geo_center_link_FoR[1]>-0.0687) && (geo_center_link_FoR[1]<-0.0328) && (geo_center_link_FoR[2]>-0.0370) && (geo_center_link_FoR[2]<0)){
+             else if((geo_center_link_FoR[0]>-0.0345) && (geo_center_link_FoR[0]<0) && (geo_center_link_FoR[1]>-0.1088) && (geo_center_link_FoR[1]<-0.0528) && (geo_center_link_FoR[2]>-0.0369) && (geo_center_link_FoR[2]<0)){
                 //triangle 204:215
                 pushTriangleToTaxelList(204,list_of_taxels);
                 //triangle 336:347
                 pushTriangleToTaxelList(336,list_of_taxels);              
              }
-             else if((geo_center_link_FoR[0]>0) && (geo_center_link_FoR[0]<0.0345) && (geo_center_link_FoR[1]>-0.0687) && (geo_center_link_FoR[1]<-0.0328) && (geo_center_link_FoR[2]>-0.0370) && (geo_center_link_FoR[2]<0)){
+             else if((geo_center_link_FoR[0]>0) && (geo_center_link_FoR[0]<0.0345) && (geo_center_link_FoR[1]>-0.1088) && (geo_center_link_FoR[1]<-0.0528) && (geo_center_link_FoR[2]>-0.0369) && (geo_center_link_FoR[2]<0)){
                 //triangle 252:263
                 pushTriangleToTaxelList(252,list_of_taxels);
                 //triangle 312:323
