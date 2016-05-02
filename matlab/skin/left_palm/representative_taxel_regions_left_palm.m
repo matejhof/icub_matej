@@ -3,7 +3,7 @@
 
 clear; clc;
 
-SAVE_FIGURES = false;
+SAVE_FIGURES = true;
 % N.B. this code is the basis for the implementation in iCub simulator in
 % iCub_Sim.cpp, OdeSdlSimulation::mapPositionIntoTaxelList(...)
 EXTRA_MARGIN_mm = 30;
@@ -91,7 +91,7 @@ hold on;
 plot(taxel_positions_FoR_10(:,2),taxel_positions_FoR_10(:,1),'xb');
 for i=1:NR_TAXELS
    if ( ((i-1+TAXEL_ID_OFFSET_PALM_TO_HAND) == 107) || ((i-1+TAXEL_ID_OFFSET_PALM_TO_HAND) == 119) || ((i-1+TAXEL_ID_OFFSET_PALM_TO_HAND) == 131) || ((i-1+TAXEL_ID_OFFSET_PALM_TO_HAND) == 139) ) %thermal pads
-          text(taxel_positions_FoR_10(i,2),taxel_positions_FoR_10(i,1),int2str(i-1+TAXEL_ID_OFFSET_PALM_TO_HAND),'FontSize',8); 
+         % text(taxel_positions_FoR_10(i,2),taxel_positions_FoR_10(i,1),int2str(i-1+TAXEL_ID_OFFSET_PALM_TO_HAND),'FontSize',8); 
    else
             text(taxel_positions_FoR_10(i,2),taxel_positions_FoR_10(i,1),int2str(i-1+TAXEL_ID_OFFSET_PALM_TO_HAND),'FontSize',14); 
    end 
@@ -146,7 +146,7 @@ hold off;
 %% save figures
 
 if SAVE_FIGURES
-    saveas(f2,'Taxel_positions_left_palm_FoR10_withRepTaxelRegions.fig');
-    print -f2 -djpeg 'Taxel_positions_left_palm_FoR10_withRepTaxelRegions.jpg';
+    saveas(f2,'Taxel_positions_left_palm_FoR10_withSkinEmulationForSIMregions.fig');
+    print -f2 -djpeg 'Taxel_positions_left_palm_FoR10__withSkinEmulationForSIMregions.jpg';
 end
 

@@ -2,7 +2,7 @@
 % Genova Dec 2013
 
 clear; clc;
-SAVE_FIGURES = false;
+SAVE_FIGURES = true;
 % N.B. this code is the basis for the implementation in iCub simulator in
 % iCub_Sim.cpp, OdeSdlSimulation::mapPositionIntoTaxelList(...)
 EXTRA_MARGIN_mm = 30;
@@ -39,8 +39,8 @@ end
 %% visualize   
 
 
-f2 = figure(2);
-clf(f2);
+f3 = figure(3);
+clf(f3);
 length = 10; % for ref. frame
 title('Taxel positions right palm FoR (nr. 10 in arm kinematics)');
 hold on;
@@ -49,7 +49,7 @@ plot(taxel_positions_FoR_10(:,2),taxel_positions_FoR_10(:,1),'xb');
 
 for i=1:NR_TAXELS
    if ( ((i-1+TAXEL_ID_OFFSET_PALM_TO_HAND) == 107) || ((i-1+TAXEL_ID_OFFSET_PALM_TO_HAND) == 119) || ((i-1+TAXEL_ID_OFFSET_PALM_TO_HAND) == 131) || ((i-1+TAXEL_ID_OFFSET_PALM_TO_HAND) == 139) ) %thermal pads
-          text(taxel_positions_FoR_10(i,2),taxel_positions_FoR_10(i,1),int2str(i-1+TAXEL_ID_OFFSET_PALM_TO_HAND),'FontSize',8); 
+          %text(taxel_positions_FoR_10(i,2),taxel_positions_FoR_10(i,1),int2str(i-1+TAXEL_ID_OFFSET_PALM_TO_HAND),'FontSize',8); 
    else
             text(taxel_positions_FoR_10(i,2),taxel_positions_FoR_10(i,1),int2str(i-1+TAXEL_ID_OFFSET_PALM_TO_HAND),'FontSize',14); 
    end 
@@ -107,8 +107,8 @@ grid on;
 hold off;
 
 if SAVE_FIGURES
-    saveas(f2,'Taxel_positions_right_palm_FoR10.fig');
-    print -f2 -djpeg 'Taxel_positions_right_palm_FoR10.jpg';
+    saveas(f3,'Taxel_positions_right_palm_FoR10_withSkinEmulationForSIMregions.fig');
+    print -f3 -djpeg 'Taxel_positions_right_palm_FoR10_withSkinEmulationForSIMregions.jpg';
 end
 
 

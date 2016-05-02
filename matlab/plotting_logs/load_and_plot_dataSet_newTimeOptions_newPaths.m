@@ -11,7 +11,7 @@
 % preprocessing is:
 %[time sender starting at 0] [delta time sender - this minus prev. time stamp]
 %[time receiver starting at 0] [delta time receiver - this minus prev. time stamp]
-%[pck id] [orig abs time stamp 1] [orig abs time stamp 2]
+%[pck id] [orig abs time stamp 1] [orig abs time stamp 2] [ACTUAL DATA AS IN ORIG FILE]
 % if there was only one time stamp, respective columns are just copies
 % ! need to set the TWO_TIME_STAMPS variable correctly
 
