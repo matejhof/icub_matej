@@ -1,13 +1,6 @@
-% 2.5.2016 Matej Hoffmann
-% working now from skinTesselation3D_left_forearm_finalVarga.m (copied from https://github.com/Tytam/martin-iCubSIM_skin/tree/master/matlab_left_forearm 
-% skinTesselation3D_left_forearm.m, here renamed to _finalVarga.m; this one
-% now refactored by Matej )
-% 
-% 
+clear all;
 
-clear all; clc;
-
-SAVE_FIGURES = true;
+SAVE_FIGURES = false;
 %% Init taxel positions from Andrea's calibration and CAD
 
 load left_forearm_taxel_pos_mesh.mat; % the no_mesh is also possible, but there are no normals, so you can't overlay the triangular modules
@@ -39,10 +32,9 @@ for j=1:size(triangle_centers_CAD_lowerPatches_assemblyFoR,1)
    column_vector_translatedAndRotated = (forearmAssemblytoWristFoR8_rotMatrix)' * column_vector_translated;
    triangle_centers_CAD_lowerPatches_wristFoR8(j,:) = column_vector_translatedAndRotated';     
 end
+%% Plot positions of calibrated taxels - Andrea
 
 
-
-%% Plot positions of calibrated taxels - Andrea vs. CAD
 
 f32 = figure(32);
 clf(f32);
@@ -59,7 +51,8 @@ for i=193:M
        end
     end
 end
-       triangle_centers_CAD = triangle_centers_CAD_upperPatch_wristFoR8; 
+
+triangle_centers_CAD = triangle_centers_CAD_upperPatch_wristFoR8;
 
        plot3(triangle_centers_CAD(1,1),triangle_centers_CAD(1,2),triangle_centers_CAD(1,3),'or');
        text(triangle_centers_CAD(1,1),triangle_centers_CAD(1,2),triangle_centers_CAD(1,3),'207','BackgroundColor','red'); 
@@ -82,76 +75,6 @@ end
        plot3(triangle_centers_CAD(7,1),triangle_centers_CAD(7,2),triangle_centers_CAD(7,3),'or');
        text(triangle_centers_CAD(7,1),triangle_centers_CAD(7,2),triangle_centers_CAD(7,3),'255','BackgroundColor','red');
        
-
-
-     h = quiver3(0 ,0, 0,0.02,0,0);
-     set(h, 'Color', 'r', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on');
-     text(0.01,0,0,'x');
-     h2 = quiver3(0,0,0, 0,0.02,0);
-     set(h2, 'Color', 'g', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on')
-     text(0,0.01,0,'y');
-     h3 = quiver3(0,0,0, 0,0,0.02);
-     set(h3, 'Color', 'b', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on')
-     text(0,0,0.01,'z');
-
-    xlabel('Taxel position x (m)');
-    set(gca,'XDir','reverse');
-    ylabel('Taxel position y (m)');
-    zlabel('Taxel position z (m)');
-    set(gca,'ZDir','reverse');
-    axis equal;
-hold off;
-
-
-f33 = figure(33);
-clf(f33);
-title('Positions of forearm taxels with their IDs (delPrete with CAD overlayed) - lower patch (in 1st wrist FoR - FoR_8)');
-hold on;
-
-    for i=1:192
-        if (nnz(taxel_pos(i,:)) > 1) % it's not an all-zero row
-           plot3(taxel_pos(i,1),taxel_pos(i,2),taxel_pos(i,3),'xb');
-           if (mod(i,12) == 4) % should be triangle midpoints
-             text(taxel_pos(i,1),taxel_pos(i,2),taxel_pos(i,3),int2str(i-1),'BackgroundColor','green'); 
-           else
-                 text(taxel_pos(i,1),taxel_pos(i,2),taxel_pos(i,3),int2str(i-1)); 
-           end
-        end
-    end
-
-    triangle_centers_CAD = triangle_centers_CAD_lowerPatches_wristFoR8;
-    for i=1:size(triangle_centers_CAD,1)
-           plot3(triangle_centers_CAD(i,1),triangle_centers_CAD(i,2),triangle_centers_CAD(i,3),'or');
-           text(triangle_centers_CAD(i,1),triangle_centers_CAD(i,2),triangle_centers_CAD(i,3), int2str(i) ,'BackgroundColor','red'); 
-    end       
-
-
-
-     h = quiver3(0 ,0, 0,0.02,0,0);
-     set(h, 'Color', 'r', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on');
-     text(0.01,0,0,'x');
-     h2 = quiver3(0,0,0, 0,0.02,0);
-     set(h2, 'Color', 'g', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on')
-     text(0,0.01,0,'y');
-     h3 = quiver3(0,0,0, 0,0,0.02);
-     set(h3, 'Color', 'b', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on')
-     text(0,0,0.01,'z');
-
-    xlabel('Taxel position x (m)');
-    set(gca,'XDir','reverse');
-    ylabel('Taxel position y (m)');
-    zlabel('Taxel position z (m)');
-    set(gca,'ZDir','reverse');
-    axis equal;
-hold off;
-
-
-
-
-
-%% Martin Varga skin emulation computations
-
-
        
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -159,7 +82,7 @@ hold off;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-triangle_centers_CAD = triangle_centers_CAD_upperPatch_wristFoR8; 
+
 % translation of sensor cordinates to match red centers
     translated_coordinates = zeros(384, 3); % new coordinates (x, y, z)
     min_max = zeros(7, 6);
@@ -329,7 +252,15 @@ triangle_centers_CAD = triangle_centers_CAD_upperPatch_wristFoR8;
         end
     end    
     
-%manual crorections
+% plot new coordinates    
+for i=193:M
+    if (nnz(translated_coordinates(i,:)) > 1) % it's not an all-zero row
+       plot3(translated_coordinates(i,1),translated_coordinates(i,2),translated_coordinates(i,3),'ob');
+       text(taxel_pos(i,1),taxel_pos(i,2),taxel_pos(i,3),int2str(i-1)); 
+    end
+end
+
+%manual corections
 %291 351 x
 a  = mean([min_max(3, 1);min_max(7, 4)]);
 min_max(3, 1) = a;
@@ -424,15 +355,36 @@ min_max(6, 4) = 0;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-m_m = zeros(3, 6);
-% these are coordinates of the cubes - regions - for skin emulation
-% 3 cubes for the upper (small) patch of the forearm
-% every row : (minx, miny, minz, maxx, maxy, maxz) - coordinates of every
-% cube
 
-% m_m(1,:) - cube enclosing triangles with taxel IDs:
-% 288-299, 300-311, 348-359
+% draws "rectangles"
+for i= 1:7
+    %uncoment to see line conecting minimal and maximal point of rectangle 
+    %plot3([min_max(i,1) min_max(i,4)],[min_max(i,2) min_max(i,5)],[min_max(i,3) min_max(i,6)]);
+    
+   % plot3([min_max(i,1) min_max(i,4)],[min_max(i,5) min_max(i,5)],[min_max(i,3) min_max(i,3)]);
+   % plot3([min_max(i,4) min_max(i,4)],[min_max(i,5) min_max(i,5)],[min_max(i,3) min_max(i,6)]);
+   % plot3([min_max(i,4) min_max(i,1)],[min_max(i,5) min_max(i,5)],[min_max(i,6) min_max(i,6)]);
+   % plot3([min_max(i,1) min_max(i,1)],[min_max(i,5) min_max(i,5)],[min_max(i,3) min_max(i,6)]);
+    
+   % plot3([min_max(i,1) min_max(i,4)],[min_max(i,2) min_max(i,2)],[min_max(i,3) min_max(i,3)]);
+   % plot3([min_max(i,4) min_max(i,4)],[min_max(i,2) min_max(i,2)],[min_max(i,3) min_max(i,6)]);
+   % plot3([min_max(i,4) min_max(i,1)],[min_max(i,2) min_max(i,2)],[min_max(i,6) min_max(i,6)]);
+   % plot3([min_max(i,1) min_max(i,1)],[min_max(i,2) min_max(i,2)],[min_max(i,3) min_max(i,6)]);
+    
+   % plot3([min_max(i,1) min_max(i,1)],[min_max(i,2) min_max(i,5)],[min_max(i,3) min_max(i,3)]);
+   % plot3([min_max(i,4) min_max(i,4)],[min_max(i,2) min_max(i,5)],[min_max(i,3) min_max(i,3)]);
+   % plot3([min_max(i,4) min_max(i,4)],[min_max(i,2) min_max(i,5)],[min_max(i,6) min_max(i,6)]);
+   % plot3([min_max(i,1) min_max(i,1)],[min_max(i,2) min_max(i,5)],[min_max(i,6) min_max(i,6)]);
+    
+    
+    
+end
+
+
+m_m = zeros(3, 6);
+
 % merge rects 3 , 4 , 7 into m_m[1]
+
 m_m(1,1) = min_max(7,1); 
 m_m(1,2) = min_max(3,2);
 m_m(1,3) = min_max(3,3);
@@ -440,9 +392,8 @@ m_m(1,4) = min_max(4,4);
 m_m(1,5) = min_max(3,5);
 m_m(1,6) = min_max(4,6);
 
-% m_m(2,:) - cube enclosing triangles with taxel IDs:
-% 204-215, 336-347
 % merge rects 1, 6 into m_m[2]
+
 m_m(2,1) = min_max(1,1); 
 m_m(2,2) = min_max(1,2);
 m_m(2,3) = min_max(6,3);
@@ -451,8 +402,7 @@ m_m(2,5) = min_max(1,5);
 m_m(2,6) = min_max(1,6);
 
 % merge rects 2, 5 into m_m[3]
-% m_m(3,:) - cube enclosing triangles with taxel IDs:
-% 252-263, 312-323 
+
 m_m(3,1) = min_max(5,1); 
 m_m(3,2) = min_max(2,2);
 m_m(3,3) = min_max(5,3);
@@ -493,6 +443,7 @@ m_m(1,6) = 0;
 m_m(2,6) = 0;
 m_m(3,6) = 0;
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %solving simulator error - nov 2015
 
 %solution 1. drift three upper triangles back y-axes
@@ -518,18 +469,37 @@ m_m(3,4) = m_m(3,4) + 0.02;
 m_m(2,1) = m_m(2,1) - 0.02;
 
 
-%more corrections of simulator error
-
-m_m(1,3) = m_m(1,3) - 0.02;
-m_m(2,3) = m_m(2,3) - 0.02;
-m_m(3,3) = m_m(3,3) - 0.02;
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+for i= 1:3
+    %uncoment to see line conecting minimal and maximal point of rectangle 
+    %plot3([min_max(i,1) min_max(i,4)],[min_max(i,2) min_max(i,5)],[min_max(i,3) min_max(i,6)]);
+    
+   % plot3([m_m(i,1) m_m(i,4)],[m_m(i,5) m_m(i,5)],[m_m(i,3) m_m(i,3)], 'Color', 'r');
+   % plot3([m_m(i,4) m_m(i,4)],[m_m(i,5) m_m(i,5)],[m_m(i,3) m_m(i,6)], 'Color', 'r');
+   % plot3([m_m(i,4) m_m(i,1)],[m_m(i,5) m_m(i,5)],[m_m(i,6) m_m(i,6)], 'Color', 'r');
+   % plot3([m_m(i,1) m_m(i,1)],[m_m(i,5) m_m(i,5)],[m_m(i,3) m_m(i,6)], 'Color', 'r');
+    
+   % plot3([m_m(i,1) m_m(i,4)],[m_m(i,2) m_m(i,2)],[m_m(i,3) m_m(i,3)], 'Color', 'r');
+   % plot3([m_m(i,4) m_m(i,4)],[m_m(i,2) m_m(i,2)],[m_m(i,3) m_m(i,6)], 'Color', 'r');
+   % plot3([m_m(i,4) m_m(i,1)],[m_m(i,2) m_m(i,2)],[m_m(i,6) m_m(i,6)], 'Color', 'r');
+   % plot3([m_m(i,1) m_m(i,1)],[m_m(i,2) m_m(i,2)],[m_m(i,3) m_m(i,6)], 'Color', 'r');
+    
+   % plot3([m_m(i,1) m_m(i,1)],[m_m(i,2) m_m(i,5)],[m_m(i,3) m_m(i,3)], 'Color', 'r');
+   % plot3([m_m(i,4) m_m(i,4)],[m_m(i,2) m_m(i,5)],[m_m(i,3) m_m(i,3)], 'Color', 'r');
+   % plot3([m_m(i,4) m_m(i,4)],[m_m(i,2) m_m(i,5)],[m_m(i,6) m_m(i,6)], 'Color', 'r');
+   % plot3([m_m(i,1) m_m(i,1)],[m_m(i,2) m_m(i,5)],[m_m(i,6) m_m(i,6)], 'Color', 'r');
+    
+    
+    
+end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %bottom part
 
-% cs = cerveny stred - red center
+% cs = èervený stred
 
 nin_nax = zeros(16, 6);
 
@@ -687,28 +657,25 @@ n_n(7,3) = 0;
 n_n(8,3) = 0;
 
 
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%corrections of simulator error
+%correctoins of simulator error
 
 n_n(1,5) = 0;
 n_n(4,5) = 0;
 n_n(5,5) = 0;
 n_n(8,5) = 0;
 
+m_m(1,3) = m_m(1,3) - 0.02;
+m_m(2,3) = m_m(2,3) - 0.02;
+m_m(3,3) = m_m(3,3) - 0.02;
+
 n_n(2,2) = n_n(2,2) - 0.02;
 n_n(6,2) = n_n(6,2) - 0.02;
 n_n(3,2) = n_n(3,2) - 0.02;
 n_n(7,2) = n_n(7,2) - 0.02;
-
-
-
-% write out to command line:
-for i=1:size(m_m,1)
-    disp(['Upper patch - cube nr.' num2str(i) ': x: <' num2str(m_m(i,1)) ',' num2str(m_m(i,4)) '>  y: <' num2str(m_m(i,2)) ',' num2str(m_m(i,5)) '>  z: <' num2str(m_m(i,3)) ',' num2str(m_m(i,6)) '>'  ]);
-end
-for i=1:size(n_n,1)
-    disp(['Lower patch - cube nr.' num2str(i) ': x: <' num2str(n_n(i,1)) ',' num2str(n_n(i,4)) '>  y: <' num2str(n_n(i,2)) ',' num2str(n_n(i,5)) '>  z: <' num2str(n_n(i,3)) ',' num2str(n_n(i,6)) '>'  ]);
-end
 
 
 %centers of cubes
@@ -727,10 +694,10 @@ for i= 1:8
   end
 end
 
-centers = zeros(11,3);
-centers = [m_m_centers; n_n_centers];
+centers = zeros(11,3)
+centers = [m_m_centers; n_n_centers]
 %distances between cube centers
-distances = zeros(11,11);
+distances = zeros(11,11)
 for i = 1:11
   for j = 1:11
       distances(i, j) = sqrt((centers(i, 1) - centers(j, 1)).^2 + (centers(i, 2) - centers(j, 2)).^2 + (centers(i, 3) - centers(j, 3)).^2 );
@@ -738,211 +705,199 @@ for i = 1:11
 end  
 
 
-%% Plot cubes for skin emulation in icubSim
-
-f321 = figure(321);
-clf(f321);
-title('Cubes for skin emulation - upper patch (in 1st wrist FoR - FoR_8)');
-hold on;
-grid on;
-
-    for i=193:M
-        if (nnz(taxel_pos(i,:)) > 1) % it's not an all-zero row
-           plot3(taxel_pos(i,1),taxel_pos(i,2),taxel_pos(i,3),'xb');
-           if (i==208 || i==340 || i==352 || i==292 || i==304 || i==316 || i==256)
-             text(taxel_pos(i,1),taxel_pos(i,2),taxel_pos(i,3),int2str(i-1),'BackgroundColor','green'); 
-           else
-                 text(taxel_pos(i,1),taxel_pos(i,2),taxel_pos(i,3),int2str(i-1)); 
-           end
-        end
-    end
-
-    triangle_centers_CAD = triangle_centers_CAD_upperPatch_wristFoR8;
-
-    plot3(triangle_centers_CAD(1,1),triangle_centers_CAD(1,2),triangle_centers_CAD(1,3),'or');
-    text(triangle_centers_CAD(1,1),triangle_centers_CAD(1,2),triangle_centers_CAD(1,3),'207','BackgroundColor','red'); 
-       
-    plot3(triangle_centers_CAD(2,1),triangle_centers_CAD(2,2),triangle_centers_CAD(2,3),'or');
-    text(triangle_centers_CAD(2,1),triangle_centers_CAD(2,2),triangle_centers_CAD(2,3),'339','BackgroundColor','red'); 
-      
-    plot3(triangle_centers_CAD(3,1),triangle_centers_CAD(3,2),triangle_centers_CAD(3,3),'or');
-    text(triangle_centers_CAD(3,1),triangle_centers_CAD(3,2),triangle_centers_CAD(3,3),'351','BackgroundColor','red'); 
-     
-    plot3(triangle_centers_CAD(4,1),triangle_centers_CAD(4,2),triangle_centers_CAD(4,3),'or');
-    text(triangle_centers_CAD(4,1),triangle_centers_CAD(4,2),triangle_centers_CAD(4,3),'291','BackgroundColor','red'); 
-       
-    plot3(triangle_centers_CAD(5,1),triangle_centers_CAD(5,2),triangle_centers_CAD(5,3),'or');
-    text(triangle_centers_CAD(5,1),triangle_centers_CAD(5,2),triangle_centers_CAD(5,3),'303','BackgroundColor','red'); 
-       
-    plot3(triangle_centers_CAD(6,1),triangle_centers_CAD(6,2),triangle_centers_CAD(6,3),'or');
-    text(triangle_centers_CAD(6,1),triangle_centers_CAD(6,2),triangle_centers_CAD(6,3),'315','BackgroundColor','red');  
-       
-    plot3(triangle_centers_CAD(7,1),triangle_centers_CAD(7,2),triangle_centers_CAD(7,3),'or');
-    text(triangle_centers_CAD(7,1),triangle_centers_CAD(7,2),triangle_centers_CAD(7,3),'255','BackgroundColor','red');
-       
-
-    % plot new coordinates    
-    for i=193:M
-        if (nnz(translated_coordinates(i,:)) > 1) % it's not an all-zero row
-           plot3(translated_coordinates(i,1),translated_coordinates(i,2),translated_coordinates(i,3),'ob');
-           text(taxel_pos(i,1),taxel_pos(i,2),taxel_pos(i,3),int2str(i-1)); 
-        end
-    end
- 
-       
-    % draws "rectangles"
-    for i= 1:7
-        %uncoment to see line conecting minimal and maximal point of rectangle 
-        %plot3([min_max(i,1) min_max(i,4)],[min_max(i,2) min_max(i,5)],[min_max(i,3) min_max(i,6)]);
-
-       % plot3([min_max(i,1) min_max(i,4)],[min_max(i,5) min_max(i,5)],[min_max(i,3) min_max(i,3)]);
-       % plot3([min_max(i,4) min_max(i,4)],[min_max(i,5) min_max(i,5)],[min_max(i,3) min_max(i,6)]);
-       % plot3([min_max(i,4) min_max(i,1)],[min_max(i,5) min_max(i,5)],[min_max(i,6) min_max(i,6)]);
-       % plot3([min_max(i,1) min_max(i,1)],[min_max(i,5) min_max(i,5)],[min_max(i,3) min_max(i,6)]);
-
-       % plot3([min_max(i,1) min_max(i,4)],[min_max(i,2) min_max(i,2)],[min_max(i,3) min_max(i,3)]);
-       % plot3([min_max(i,4) min_max(i,4)],[min_max(i,2) min_max(i,2)],[min_max(i,3) min_max(i,6)]);
-       % plot3([min_max(i,4) min_max(i,1)],[min_max(i,2) min_max(i,2)],[min_max(i,6) min_max(i,6)]);
-       % plot3([min_max(i,1) min_max(i,1)],[min_max(i,2) min_max(i,2)],[min_max(i,3) min_max(i,6)]);
-
-       % plot3([min_max(i,1) min_max(i,1)],[min_max(i,2) min_max(i,5)],[min_max(i,3) min_max(i,3)]);
-       % plot3([min_max(i,4) min_max(i,4)],[min_max(i,2) min_max(i,5)],[min_max(i,3) min_max(i,3)]);
-       % plot3([min_max(i,4) min_max(i,4)],[min_max(i,2) min_max(i,5)],[min_max(i,6) min_max(i,6)]);
-       % plot3([min_max(i,1) min_max(i,1)],[min_max(i,2) min_max(i,5)],[min_max(i,6) min_max(i,6)]);
-    end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% end of Martin Varga 2015
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    for i= 1:3
-        %uncoment to see line conecting minimal and maximal point of rectangle 
-        %plot3([min_max(i,1) min_max(i,4)],[min_max(i,2) min_max(i,5)],[min_max(i,3) min_max(i,6)]);
 
-       plot3([m_m(i,1) m_m(i,4)],[m_m(i,5) m_m(i,5)],[m_m(i,3) m_m(i,3)], 'Color', 'r');
-       plot3([m_m(i,4) m_m(i,4)],[m_m(i,5) m_m(i,5)],[m_m(i,3) m_m(i,6)], 'Color', 'r');
-       plot3([m_m(i,4) m_m(i,1)],[m_m(i,5) m_m(i,5)],[m_m(i,6) m_m(i,6)], 'Color', 'r');
-       plot3([m_m(i,1) m_m(i,1)],[m_m(i,5) m_m(i,5)],[m_m(i,3) m_m(i,6)], 'Color', 'r');
+ h = quiver3(0 ,0, 0,0.02,0,0);
+ set(h, 'Color', 'r', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on');
+ text(0.01,0,0,'x');
+ h2 = quiver3(0,0,0, 0,0.02,0);
+ set(h2, 'Color', 'g', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on')
+ text(0,0.01,0,'y');
+ h3 = quiver3(0,0,0, 0,0,0.02);
+ set(h3, 'Color', 'b', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on')
+ text(0,0,0.01,'z');
 
-       plot3([m_m(i,1) m_m(i,4)],[m_m(i,2) m_m(i,2)],[m_m(i,3) m_m(i,3)], 'Color', 'r');
-       plot3([m_m(i,4) m_m(i,4)],[m_m(i,2) m_m(i,2)],[m_m(i,3) m_m(i,6)], 'Color', 'r');
-       plot3([m_m(i,4) m_m(i,1)],[m_m(i,2) m_m(i,2)],[m_m(i,6) m_m(i,6)], 'Color', 'r');
-       plot3([m_m(i,1) m_m(i,1)],[m_m(i,2) m_m(i,2)],[m_m(i,3) m_m(i,6)], 'Color', 'r');
-
-       plot3([m_m(i,1) m_m(i,1)],[m_m(i,2) m_m(i,5)],[m_m(i,3) m_m(i,3)], 'Color', 'r');
-       plot3([m_m(i,4) m_m(i,4)],[m_m(i,2) m_m(i,5)],[m_m(i,3) m_m(i,3)], 'Color', 'r');
-       plot3([m_m(i,4) m_m(i,4)],[m_m(i,2) m_m(i,5)],[m_m(i,6) m_m(i,6)], 'Color', 'r');
-       plot3([m_m(i,1) m_m(i,1)],[m_m(i,2) m_m(i,5)],[m_m(i,6) m_m(i,6)], 'Color', 'r');
-    end
-       
-             
-    % axes
-     h = quiver3(0 ,0, 0,0.02,0,0);
-     set(h, 'Color', 'r', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on');
-     text(0.01,0,0,'x');
-     h2 = quiver3(0,0,0, 0,0.02,0);
-     set(h2, 'Color', 'g', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on')
-     text(0,0.01,0,'y');
-     h3 = quiver3(0,0,0, 0,0,0.02);
-     set(h3, 'Color', 'b', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on')
-     text(0,0,0.01,'z');
-
-    xlabel('Taxel position x (m)');
-    set(gca,'XDir','reverse');
-    ylabel('Taxel position y (m)');
-    zlabel('Taxel position z (m)');
-    set(gca,'ZDir','reverse');
-    axis equal;
+xlabel('Taxel position x (m)');
+set(gca,'XDir','reverse');
+ylabel('Taxel position y (m)');
+zlabel('Taxel position z (m)');
+set(gca,'ZDir','reverse');
+axis equal;
 hold off;
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Here starts figure 33
 
-
-f331 = figure(331);
-clf(f331);
-title('Cubes for skin emulation - lower patch (in 1st wrist FoR - FoR_8)');
+f33 = figure(33);
+clf(f33);
+title('Positions of forearm taxels with their IDs (delPrete with CAD overlayed) - lower patch (in 1st wrist FoR - FoR_8)');
 hold on;
-grid on;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Martin Varga
 
 
-    for i=1:192
-        if (nnz(taxel_pos(i,:)) > 1) % it's not an all-zero row
-           plot3(taxel_pos(i,1),taxel_pos(i,2),taxel_pos(i,3),'xb');
-           if (mod(i,12) == 4) % should be triangle midpoints
-             text(taxel_pos(i,1),taxel_pos(i,2),taxel_pos(i,3),int2str(i-1),'BackgroundColor','green'); 
-           else
-                 text(taxel_pos(i,1),taxel_pos(i,2),taxel_pos(i,3),int2str(i-1)); 
-           end
-        end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%vizualization of undetected colisions
+err_5 = zeros(6,3);
+
+err_5(1,:) = [0.005890, 0.053078, 0.034208];
+err_5(2,:) = [0.003985, 0.058521, 0.037677];
+err_5(3,:) = [0.006101, 0.052309, 0.033990];
+err_5(4,:) = [0.004134, 0.058530, 0.037661];
+err_5(5,:) = [0.010086, 0.042400, 0.034179];
+err_5(6,:) = [0.012104, 0.043898, 0.033809];
+
+for k = 1:6
+ plot3(err_5(k,1),err_5(k,2),err_5(k,3), 'marker', 'h');
+end
+
+
+err_2 = zeros(15,3);
+
+err_2(1,:) = [0.013765, -0.058752, -0.037211];
+err_2(2,:) = [0.013477, -0.059329, -0.037150];
+err_2(3,:) = [0.013280, -0.059390, -0.037347];
+err_2(4,:) = [0.013039, -0.060191, -0.037113];
+err_2(5,:) = [0.014053, -0.059060, -0.036913];
+err_2(6,:) = [0.013960, -0.058945, -0.036904];
+
+err_2(7,:) = [-0.010456, -0.108144, 0.036721];
+err_2(8,:) = [-0.010457, -0.108146, 0.036722];
+err_2(9,:) = [-0.010455, -0.108147, 0.036723];
+err_2(10,:) = [-0.010457, -0.108149, 0.036724];
+err_2(11,:) = [-0.010457, -0.108150, 0.036725];
+err_2(12,:) = [0.013960, -0.058945, -0.036904];
+
+err_2(13,:) = [-0.025151, -0.110860, -0.010380];
+err_2(14,:) = [0.030552, -0.109349, -0.011520];
+err_2(15,:) = [0.035319, -0.101948, -0.014041];
+
+
+for k = 1:12
+ plot3(err_2(k,1),err_2(k,2),err_2(k,3), 'marker', '*', 'Color', 'r');
+end
+
+for k = 13:15
+ plot3(err_2(k,1),err_2(k,2),err_2(k,3), 'marker', '*', 'Color', 'g');
+end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% draws "rectangles"
+for i= 1:16
+     
+    plot3([nin_nax(i,1) nin_nax(i,4)],[nin_nax(i,5) nin_nax(i,5)],[nin_nax(i,3) nin_nax(i,3)]);
+    plot3([nin_nax(i,4) nin_nax(i,4)],[nin_nax(i,5) nin_nax(i,5)],[nin_nax(i,3) nin_nax(i,6)]);
+    plot3([nin_nax(i,4) nin_nax(i,1)],[nin_nax(i,5) nin_nax(i,5)],[nin_nax(i,6) nin_nax(i,6)]);
+    plot3([nin_nax(i,1) nin_nax(i,1)],[nin_nax(i,5) nin_nax(i,5)],[nin_nax(i,3) nin_nax(i,6)]);
+    
+    plot3([nin_nax(i,1) nin_nax(i,4)],[nin_nax(i,2) nin_nax(i,2)],[nin_nax(i,3) nin_nax(i,3)]);
+    plot3([nin_nax(i,4) nin_nax(i,4)],[nin_nax(i,2) nin_nax(i,2)],[nin_nax(i,3) nin_nax(i,6)]);
+    plot3([nin_nax(i,4) nin_nax(i,1)],[nin_nax(i,2) nin_nax(i,2)],[nin_nax(i,6) nin_nax(i,6)]);
+    plot3([nin_nax(i,1) nin_nax(i,1)],[nin_nax(i,2) nin_nax(i,2)],[nin_nax(i,3) nin_nax(i,6)]);
+    
+    plot3([nin_nax(i,1) nin_nax(i,1)],[nin_nax(i,2) nin_nax(i,5)],[nin_nax(i,3) nin_nax(i,3)]);
+    plot3([nin_nax(i,4) nin_nax(i,4)],[nin_nax(i,2) nin_nax(i,5)],[nin_nax(i,3) nin_nax(i,3)]);
+    plot3([nin_nax(i,4) nin_nax(i,4)],[nin_nax(i,2) nin_nax(i,5)],[nin_nax(i,6) nin_nax(i,6)]);
+    plot3([nin_nax(i,1) nin_nax(i,1)],[nin_nax(i,2) nin_nax(i,5)],[nin_nax(i,6) nin_nax(i,6)]);
+       
+end
+
+
+
+
+% draws big "rectangles"
+for i= 1:8
+      
+    plot3([n_n(i,1) n_n(i,4)],[n_n(i,5) n_n(i,5)],[n_n(i,3) n_n(i,3)], 'Color', 'r');
+    plot3([n_n(i,4) n_n(i,4)],[n_n(i,5) n_n(i,5)],[n_n(i,3) n_n(i,6)], 'Color', 'r');
+    plot3([n_n(i,4) n_n(i,1)],[n_n(i,5) n_n(i,5)],[n_n(i,6) n_n(i,6)], 'Color', 'r');
+    plot3([n_n(i,1) n_n(i,1)],[n_n(i,5) n_n(i,5)],[n_n(i,3) n_n(i,6)], 'Color', 'r');
+    
+    plot3([n_n(i,1) n_n(i,4)],[n_n(i,2) n_n(i,2)],[n_n(i,3) n_n(i,3)], 'Color', 'r');
+    plot3([n_n(i,4) n_n(i,4)],[n_n(i,2) n_n(i,2)],[n_n(i,3) n_n(i,6)], 'Color', 'r');
+    plot3([n_n(i,4) n_n(i,1)],[n_n(i,2) n_n(i,2)],[n_n(i,6) n_n(i,6)], 'Color', 'r');
+    plot3([n_n(i,1) n_n(i,1)],[n_n(i,2) n_n(i,2)],[n_n(i,3) n_n(i,6)], 'Color', 'r');
+    
+    plot3([n_n(i,1) n_n(i,1)],[n_n(i,2) n_n(i,5)],[n_n(i,3) n_n(i,3)], 'Color', 'r');
+    plot3([n_n(i,4) n_n(i,4)],[n_n(i,2) n_n(i,5)],[n_n(i,3) n_n(i,3)], 'Color', 'r');
+    plot3([n_n(i,4) n_n(i,4)],[n_n(i,2) n_n(i,5)],[n_n(i,6) n_n(i,6)], 'Color', 'r');
+    plot3([n_n(i,1) n_n(i,1)],[n_n(i,2) n_n(i,5)],[n_n(i,6) n_n(i,6)], 'Color', 'r');
+     
+end
+
+for i= 1:3
+    %uncoment to see line conecting minimal and maximal point of rectangle 
+    %plot3([min_max(i,1) min_max(i,4)],[min_max(i,2) min_max(i,5)],[min_max(i,3) min_max(i,6)]);
+    
+    plot3([m_m(i,1) m_m(i,4)],[m_m(i,5) m_m(i,5)],[m_m(i,3) m_m(i,3)], 'Color', 'g');
+    plot3([m_m(i,4) m_m(i,4)],[m_m(i,5) m_m(i,5)],[m_m(i,3) m_m(i,6)], 'Color', 'g');
+    plot3([m_m(i,4) m_m(i,1)],[m_m(i,5) m_m(i,5)],[m_m(i,6) m_m(i,6)], 'Color', 'g');
+    plot3([m_m(i,1) m_m(i,1)],[m_m(i,5) m_m(i,5)],[m_m(i,3) m_m(i,6)], 'Color', 'g');
+    
+    plot3([m_m(i,1) m_m(i,4)],[m_m(i,2) m_m(i,2)],[m_m(i,3) m_m(i,3)], 'Color', 'g');
+    plot3([m_m(i,4) m_m(i,4)],[m_m(i,2) m_m(i,2)],[m_m(i,3) m_m(i,6)], 'Color', 'g');
+    plot3([m_m(i,4) m_m(i,1)],[m_m(i,2) m_m(i,2)],[m_m(i,6) m_m(i,6)], 'Color', 'g');
+    plot3([m_m(i,1) m_m(i,1)],[m_m(i,2) m_m(i,2)],[m_m(i,3) m_m(i,6)], 'Color', 'g');
+    
+    plot3([m_m(i,1) m_m(i,1)],[m_m(i,2) m_m(i,5)],[m_m(i,3) m_m(i,3)], 'Color', 'g');
+    plot3([m_m(i,4) m_m(i,4)],[m_m(i,2) m_m(i,5)],[m_m(i,3) m_m(i,3)], 'Color', 'g');
+    plot3([m_m(i,4) m_m(i,4)],[m_m(i,2) m_m(i,5)],[m_m(i,6) m_m(i,6)], 'Color', 'g');
+    plot3([m_m(i,1) m_m(i,1)],[m_m(i,2) m_m(i,5)],[m_m(i,6) m_m(i,6)], 'Color', 'g');
+    
+    
+    
+end
+
+
+
+%end of Martin Varga
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+for i=1:192
+    if (nnz(taxel_pos(i,:)) > 1) % it's not an all-zero row
+       plot3(taxel_pos(i,1),taxel_pos(i,2),taxel_pos(i,3),'xb');
+       if (mod(i,12) == 4) % should be triangle midpoints
+         text(taxel_pos(i,1),taxel_pos(i,2),taxel_pos(i,3),int2str(i-1),'BackgroundColor','green'); 
+       else
+             text(taxel_pos(i,1),taxel_pos(i,2),taxel_pos(i,3),int2str(i-1)); 
+       end
     end
+end
 
-    triangle_centers_CAD = triangle_centers_CAD_lowerPatches_wristFoR8;
-    for i=1:size(triangle_centers_CAD,1)
-           plot3(triangle_centers_CAD(i,1),triangle_centers_CAD(i,2),triangle_centers_CAD(i,3),'or');
-           text(triangle_centers_CAD(i,1),triangle_centers_CAD(i,2),triangle_centers_CAD(i,3), int2str(i) ,'BackgroundColor','red'); 
-    end       
+triangle_centers_CAD = triangle_centers_CAD_lowerPatches_wristFoR8;
+for i=1:size(triangle_centers_CAD,1)
+       plot3(triangle_centers_CAD(i,1),triangle_centers_CAD(i,2),triangle_centers_CAD(i,3),'or');
+       text(triangle_centers_CAD(i,1),triangle_centers_CAD(i,2),triangle_centers_CAD(i,3), int2str(i) ,'BackgroundColor','red'); 
+end       
+   
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    % % draws "rectangles"
-    % for i= 1:16
-    %      
-    %     plot3([nin_nax(i,1) nin_nax(i,4)],[nin_nax(i,5) nin_nax(i,5)],[nin_nax(i,3) nin_nax(i,3)]);
-    %     plot3([nin_nax(i,4) nin_nax(i,4)],[nin_nax(i,5) nin_nax(i,5)],[nin_nax(i,3) nin_nax(i,6)]);
-    %     plot3([nin_nax(i,4) nin_nax(i,1)],[nin_nax(i,5) nin_nax(i,5)],[nin_nax(i,6) nin_nax(i,6)]);
-    %     plot3([nin_nax(i,1) nin_nax(i,1)],[nin_nax(i,5) nin_nax(i,5)],[nin_nax(i,3) nin_nax(i,6)]);
-    %     
-    %     plot3([nin_nax(i,1) nin_nax(i,4)],[nin_nax(i,2) nin_nax(i,2)],[nin_nax(i,3) nin_nax(i,3)]);
-    %     plot3([nin_nax(i,4) nin_nax(i,4)],[nin_nax(i,2) nin_nax(i,2)],[nin_nax(i,3) nin_nax(i,6)]);
-    %     plot3([nin_nax(i,4) nin_nax(i,1)],[nin_nax(i,2) nin_nax(i,2)],[nin_nax(i,6) nin_nax(i,6)]);
-    %     plot3([nin_nax(i,1) nin_nax(i,1)],[nin_nax(i,2) nin_nax(i,2)],[nin_nax(i,3) nin_nax(i,6)]);
-    %     
-    %     plot3([nin_nax(i,1) nin_nax(i,1)],[nin_nax(i,2) nin_nax(i,5)],[nin_nax(i,3) nin_nax(i,3)]);
-    %     plot3([nin_nax(i,4) nin_nax(i,4)],[nin_nax(i,2) nin_nax(i,5)],[nin_nax(i,3) nin_nax(i,3)]);
-    %     plot3([nin_nax(i,4) nin_nax(i,4)],[nin_nax(i,2) nin_nax(i,5)],[nin_nax(i,6) nin_nax(i,6)]);
-    %     plot3([nin_nax(i,1) nin_nax(i,1)],[nin_nax(i,2) nin_nax(i,5)],[nin_nax(i,6) nin_nax(i,6)]);
-    %        
-    % end
+ h = quiver3(0 ,0, 0,0.02,0,0);
+ set(h, 'Color', 'r', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on');
+ text(0.01,0,0,'x');
+ h2 = quiver3(0,0,0, 0,0.02,0);
+ set(h2, 'Color', 'g', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on')
+ text(0,0.01,0,'y');
+ h3 = quiver3(0,0,0, 0,0,0.02);
+ set(h3, 'Color', 'b', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on')
+ text(0,0,0.01,'z');
 
-    % draws big "rectangles"
-    for i= 1:8
-
-        plot3([n_n(i,1) n_n(i,4)],[n_n(i,5) n_n(i,5)],[n_n(i,3) n_n(i,3)], 'Color', 'r');
-        plot3([n_n(i,4) n_n(i,4)],[n_n(i,5) n_n(i,5)],[n_n(i,3) n_n(i,6)], 'Color', 'r');
-        plot3([n_n(i,4) n_n(i,1)],[n_n(i,5) n_n(i,5)],[n_n(i,6) n_n(i,6)], 'Color', 'r');
-        plot3([n_n(i,1) n_n(i,1)],[n_n(i,5) n_n(i,5)],[n_n(i,3) n_n(i,6)], 'Color', 'r');
-
-        plot3([n_n(i,1) n_n(i,4)],[n_n(i,2) n_n(i,2)],[n_n(i,3) n_n(i,3)], 'Color', 'r');
-        plot3([n_n(i,4) n_n(i,4)],[n_n(i,2) n_n(i,2)],[n_n(i,3) n_n(i,6)], 'Color', 'r');
-        plot3([n_n(i,4) n_n(i,1)],[n_n(i,2) n_n(i,2)],[n_n(i,6) n_n(i,6)], 'Color', 'r');
-        plot3([n_n(i,1) n_n(i,1)],[n_n(i,2) n_n(i,2)],[n_n(i,3) n_n(i,6)], 'Color', 'r');
-
-        plot3([n_n(i,1) n_n(i,1)],[n_n(i,2) n_n(i,5)],[n_n(i,3) n_n(i,3)], 'Color', 'r');
-        plot3([n_n(i,4) n_n(i,4)],[n_n(i,2) n_n(i,5)],[n_n(i,3) n_n(i,3)], 'Color', 'r');
-        plot3([n_n(i,4) n_n(i,4)],[n_n(i,2) n_n(i,5)],[n_n(i,6) n_n(i,6)], 'Color', 'r');
-        plot3([n_n(i,1) n_n(i,1)],[n_n(i,2) n_n(i,5)],[n_n(i,6) n_n(i,6)], 'Color', 'r');
-
-    end
-
-    % axes
-     h = quiver3(0 ,0, 0,0.02,0,0);
-     set(h, 'Color', 'r', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on');
-     text(0.01,0,0,'x');
-     h2 = quiver3(0,0,0, 0,0.02,0);
-     set(h2, 'Color', 'g', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on')
-     text(0,0.01,0,'y');
-     h3 = quiver3(0,0,0, 0,0,0.02);
-     set(h3, 'Color', 'b', 'LineWidth', 2, 'MaxHeadSize', 4, 'ShowArrowHead', 'on')
-     text(0,0,0.01,'z');
-
-    xlabel('Taxel position x (m)');
-    set(gca,'XDir','reverse');
-    ylabel('Taxel position y (m)');
-    zlabel('Taxel position z (m)');
-    set(gca,'ZDir','reverse');
-    axis equal;
+xlabel('Taxel position x (m)');
+set(gca,'XDir','reverse');
+ylabel('Taxel position y (m)');
+zlabel('Taxel position z (m)');
+set(gca,'ZDir','reverse');
+axis equal;
 hold off;
 
-
-%% other plots
 
 f4 = figure(4);
 clf(f4);
@@ -1398,19 +1353,22 @@ axis equal;
 
 %% save figures
 if SAVE_FIGURES
+    saveas(f1,'Taxel_positions_left_forearm.fig');
+    print -f1 -djpeg 'Taxel_positions_left_forearm.jpg';
+    saveas(f2,'Taxel_positions_left_forearm_lowerBigPatch.fig');
+    print -f2 -djpeg 'Taxel_positions_left_forearm_lowerBigPatch.jpg';
+    saveas(f3,'Taxel_positions_left_forearm_upperSmallPatch.fig');
+    print -f3 -djpeg 'Taxel_positions_left_forearm_upperSmallPatch.jpg';
+    saveas(f31,'TriangleCenters_left_forearm_upperSmallPatch_CAD.fig');
+    print -f31 -djpeg 'TriangleCenters_left_forearm_upperSmallPatch_CAD.jpg';
     saveas(f32,'Taxel_positions_left_forearm_upperSmallPatch_delPreteAndCAD.fig');
     print -f32 -djpeg 'Taxel_positions_left_forearm_upperSmallPatch_delPreteAndCAD.jpg';
-    saveas(f33,'Taxel_positions_left_forearm_lowerBigPatch_delPreteAndCAD.fig');
-    print -f33 -djpeg 'Taxel_positions_left_forearm_lowerBigPatch_delPreteAndCAD.jpg';
-    saveas(f321,'CubesForSkinEmulation_left_forearm_upperSmallPatch.fig');
-    print -f321 -djpeg 'CubesForSkinEmulation_left_forearm_upperSmallPatch.jpg';
-    saveas(f331,'CubesForSkinEmulation_left_forearm_lowerBigPatch.fig');
-    print -f331 -djpeg 'CubesForSkinEmulation_left_forearm_lowerBigPatch.jpg';
     saveas(f4,'Taxel_positions_left_forearm_upperSmallPatch_allPlusFirstThreeTrianglesIndividually.fig');
     print -f4 -djpeg 'Taxel_positions_left_forearm_upperSmallPatch_allPlusFirstThreeTrianglesIndividually.jpg';
     saveas(f4,'Taxel_positions_left_forearm_upperSmallPatch_lastFourTrianglesIndividually.fig');
     print -f4 -djpeg 'Taxel_positions_left_forearm_upperSmallPatch_lastFourTrianglesIndividually.jpg';
     saveas(f6,'Taxel_positions_left_forearm_upperSmallPatch_OneTriangularModuleOverlayed.fig');
     print -f6 -djpeg 'Taxel_positions_left_forearm_upperSmallPatch_OneTriangularModuleOverlayed.jpg';
-    
+    saveas(f61,'Taxel_positions_left_forearm_lowerBigPatch_OneTriangularModuleOverlayed.fig');
+    print -f61 -djpeg 'Taxel_positions_left_forearm_lowerBigPatch_OneTriangularModuleOverlayed.jpg';
 end
